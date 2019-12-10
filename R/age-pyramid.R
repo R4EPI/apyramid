@@ -135,7 +135,10 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   }
 
   if (!is.numeric(data[[split_by]]) || !is.numeric(data[[stack_by]])) {
-    stop("split_by and stack_by must be numeric variables")
+    msg <- "split_by and stack_by must be numeric variables of counts or proportions."
+    msg <- paste0(msg, "Did you aggregate the data first?")
+    msg <- paste0(msg, "\n\nUse aggregate_by_age() to aggregate the data.")
+    stop(msg)
   }
 
   ag <- rlang::sym(age_group)
