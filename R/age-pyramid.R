@@ -120,13 +120,22 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
                         pal = NULL) {
   is_df <- is.data.frame(data)
   is_svy <- inherits(data, "tbl_svy")
-  age_group <- tidyselect::vars_select(colnames(data), !!rlang::enquo(age_group))
-  split_by <- tidyselect::vars_select(colnames(data), !!rlang::enquo(split_by))
-  stack_by <- tidyselect::vars_select(colnames(data), !!rlang::enquo(stack_by))
+
+  age_group <- get_var(data, !!rlang::enquo(age_group))
+  split_by  <- get_var(data, !!rlang::enquo(split_by))
+  stack_by  <- get_var(data, !!rlang::enquo(stack_by))
 
   if (!is_df && !is_svy) {
     msg <- sprintf("%s must be a data frame or  object", deparse(substitute(data)))
     stop(msg)
+  }
+
+  if (!is.factor(data[[age_group]])) {
+    stop("age group must be a factor")
+  }
+
+  if (!is.numeric(data[[split_by]]) || !is.numeric(data[[stack_by]])) {
+    stop("split_by and stack_by must be numeric variables")
   }
 
   ag <- rlang::sym(age_group)
@@ -134,15 +143,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   st <- rlang::sym(stack_by)
 
   # Count the plot data --------------------------------------------------------
-  plot_data <- aggregate_by_age(
-    data,
-    age_group,
-    split_by,
-    stack_by,
-    proportional,
-    na.rm
-  )
-
+  plot_data <- data
   # gathering the levels for each of the elements ------------------------------
   age_levels <- levels(plot_data[[age_group]])
   max_age_group <- age_levels[length(age_levels)]

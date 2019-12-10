@@ -55,9 +55,9 @@ dat <- data.frame(
   stringsAsFactors = FALSE
 )
 aggregate_by_age(dat, 
-                 age_group = "AGE",
-                 split_by = "gender", 
-                 stack_by = "ill",
+                 age_group = AGE,
+                 split_by = gender, 
+                 stack_by = ill,
                  proportional = TRUE,
                  na.rm = FALSE)
 }

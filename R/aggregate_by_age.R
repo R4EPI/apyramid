@@ -1,15 +1,21 @@
 #' Aggregate linelist data into counts by age group
 #'
+#'
 #' @param data a data frame
+#'
 #' @param age_group the name of a column in the data frame that defines the age
 #'   group categories. Defaults to "age_group"
+#'
 #' @param split_by the name of a column in the data frame that defines the
 #'   the bivariate column. Defaults to "sex". See NOTE
+#'
 #' @param stack_by the name of the column in the data frame to use for shading
 #'   the bars
+#'
 #' @param proportional If `TRUE`, bars will represent proportions of cases out
 #'   of the entire population. Otherwise (`FALSE`, default), bars represent
 #'   case counts
+#'
 #' @param na.rm  If `TRUE`, this removes NA counts from the age groups. Defaults
 #'   to `TRUE`.
 #'
@@ -33,65 +39,49 @@
 #'   stringsAsFactors = FALSE
 #' )
 #' aggregate_by_age(dat, 
-#'                  age_group = "AGE",
-#'                  split_by = "gender", 
-#'                  stack_by = "ill",
+#'                  age_group = AGE,
+#'                  split_by = gender, 
+#'                  stack_by = ill,
 #'                  proportional = TRUE,
 #'                  na.rm = FALSE)
 aggregate_by_age <- function(data, age_group = "age_group", split_by = "sex",
                              stack_by = split_by, proportional = FALSE, 
                              na.rm = TRUE) {
-  ag <- rlang::sym(age_group)
-  sb <- rlang::sym(split_by)
-  st <- rlang::sym(stack_by)
+
+  age_group <- get_var(data, age_group)
+  split_by  <- get_var(data, split_by)
+  stack_by  <- get_var(data, stack_by)
+  ag        <- rlang::sym(age_group)
+  sb        <- rlang::sym(split_by)
+  st        <- rlang::sym(stack_by)
 
   if (is.data.frame(data)) {
-    sbv <- data[[split_by]]
-    stv <- data[[stack_by]]
-    if (!is.character(sbv) || !is.factor(sbv)) {
-      data[[split_by]] <- as.character(sbv)
-    }
-    if (!is.character(stv) || !is.factor(stv)) {
-      data[[stack_by]] <- as.character(stv)
-    }
-    if (anyNA(sbv) || anyNA(stv)) {
-      nas <- is.na(sbv) | is.na(stv)
-      warning(sprintf(
-        "removing %d observations with missing values between the %s and %s columns.",
-        sum(nas), split_by, stack_by
-      ))
-      data <- data[!nas, , drop = FALSE]
-    }
-    if (na.rm) {
-      nas <- is.na(data[[age_group]])
-      warning(sprintf(
-        "removing %d observations with missing values from the %s column.",
-        sum(nas), age_group
-      ))
-      data <- data[!nas, , drop = FALSE]
-    } else {
-      data[[age_group]] <- forcats::fct_explicit_na(data[[age_group]])
-    }
+    data[[split_by]] <- to_character(data[[split_by]])
+    data[[stack_by]] <- to_character(data[[stack_by]])
+    data             <- treat_nas(data, age_group, split_by, stack_by, na.rm)
+
     plot_data <- dplyr::count(data, !!ag, !!sb, !!st, .drop = FALSE)
     plot_data <- dplyr::ungroup(plot_data)
-    if (is.factor(sbv)) {
-      plot_data[[split_by]] <- factor(plot_data[[split_by]], levels(sbv))
+    plot_data <- force_factors(plot_data, data, split_by, stack_by)
+  } else if (inherits(data, "tbl_svy")) {
+    if (!requireNamespace("srvyr")) {
+      stop("Please install the srvyr package to proceed\n\ninstall.packages('srvyr')")
+    } else {
+      plot_data <- srvyr::group_by(data, !!ag, !!sb, !!st, .drop = FALSE)
+      plot_data <- srvyr::summarise(plot_data,
+        n = srvyr::survey_total(vartype = "ci", level = 0.95)
+      )
     }
-    if (is.factor(stv)) {
-      plot_data[[stack_by]] <- factor(plot_data[[stack_by]], levels(stv))
-    }
-  } else {
-    plot_data <- srvyr::group_by(data, !!ag, !!sb, !!st, .drop = FALSE)
-    plot_data <- srvyr::summarise(plot_data,
-      n = srvyr::survey_total(vartype = "ci", level = 0.95)
-    )
   }
   # Remove any missing values
-  to_delete <- is.na(plot_data[[split_by]]) & is.na(plot_data[[stack_by]]) & plot_data[["n"]] == 0
+  to_delete <- is.na(plot_data[[split_by]]) & 
+               is.na(plot_data[[stack_by]]) & 
+               plot_data[["n"]] == 0
+
   plot_data <- plot_data[!to_delete, , drop = FALSE]
 
   if (proportional) {
-    plot_data$n <- plot_data$n / sum(plot_data$n, na.rm = TRUE)
+    plot_data[["n"]] <- plot_data[["n"]] / sum(plot_data[["n"]], na.rm = TRUE)
   }
 
   plot_data
