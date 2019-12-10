@@ -5,3 +5,6 @@
 ^cran-comments\.md$
 ^\.github$
 ^README.html
+^\.travis\.yml$
+^appveyor\.yml$
+^codecov\.yml$

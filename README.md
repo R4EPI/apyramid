@@ -1,3 +1,5 @@
+Age Pyramids in R
+================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -9,6 +11,12 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/apyramid)](https://CRAN.R-project.org/package=apyramid)
+[![Travis build
+status](https://travis-ci.org/R4EPI/apyramid.svg?branch=master)](https://travis-ci.org/R4EPI/apyramid)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/R4EPI/apyramid?branch=master&svg=true)](https://ci.appveyor.com/project/R4EPI/apyramid)
+[![Codecov test
+coverage](https://codecov.io/gh/R4EPI/apyramid/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/apyramid?branch=master)
 <!-- badges: end -->
 
 The goal of apyramid is to …

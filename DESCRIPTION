@@ -12,7 +12,8 @@ License: GPL-3
 Suggests: 
     testthat,
     srvyr,
-    vdiffr
+    vdiffr,
+    covr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
