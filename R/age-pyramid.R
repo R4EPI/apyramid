@@ -40,7 +40,7 @@
 #' @note If the `split_by` variable is bivariate (e.g. an indicator for
 #' pregnancy), then the result will show up as a pyramid, otherwise, it will be
 #' presented as a facetted barplot with with empty bars in the background
-#' indicating the range of the un-facetted data set. Values of `spit_by` will
+#' indicating the range of the un-facetted data set. Values of `split_by` will
 #' show up as labels at top of each facet.
 #'
 #' @import ggplot2
@@ -118,6 +118,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
                         show_halfway = TRUE, vertical_lines = FALSE,
                         horizontal_lines = TRUE, pyramid = TRUE,
                         pal = NULL) {
+
   is_df <- is.data.frame(data)
   is_svy <- inherits(data, "tbl_svy")
 
@@ -134,19 +135,19 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
     stop("age group must be a factor")
   }
 
-  if (!is.numeric(data[[split_by]]) || !is.numeric(data[[stack_by]])) {
-    msg <- "split_by and stack_by must be numeric variables of counts or proportions."
-    msg <- paste0(msg, "Did you aggregate the data first?")
-    msg <- paste0(msg, "\n\nUse aggregate_by_age() to aggregate the data.")
-    stop(msg)
-  }
-
   ag <- rlang::sym(age_group)
   sb <- rlang::sym(split_by)
   st <- rlang::sym(stack_by)
 
   # Count the plot data --------------------------------------------------------
-  plot_data <- data
+  plot_data <- aggregate_by_age(
+    data,
+    age_group    = age_group,
+    stack_by     = stack_by,
+    split_by     = split_by,
+    proportional = proportional,
+    na.rm        = na.rm
+  )
   # gathering the levels for each of the elements ------------------------------
   age_levels <- levels(plot_data[[age_group]])
   max_age_group <- age_levels[length(age_levels)]
@@ -260,10 +261,10 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
     maxdata[["halfway"]] <- "midpoint"
     pyramid <- pyramid +
       geom_segment(aes(
-        x = !!quote(x),
-        xend = !!quote(xend),
-        y = !!quote(center),
-        yend = !!quote(center),
+        x        = !!quote(x),
+        xend     = !!quote(xend),
+        y        = !!quote(center),
+        yend     = !!quote(center),
         linetype = !!quote(halfway)
       ),
       color = "grey20",

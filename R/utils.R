@@ -1,9 +1,12 @@
 get_var <- function(dat, var) {
+  if (!inherits(dat, c("data.frame", "tbl_srvy"))) {
+    stop("Input must be a data frame", call. = FALSE)
+  }
   tidyselect::vars_select(colnames(dat), !!rlang::enquo(var))
 }
 
 to_character <- function(x) {
-  if (!is.character(x) || !is.factor(x)) as.character(x) else x
+  if (!is.character(x) && !is.factor(x)) as.character(x) else x
 }
 
 

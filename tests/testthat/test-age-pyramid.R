@@ -133,7 +133,7 @@ test_that("missing levels are still plotted", {
   # Complete data has both groups
   expect_equal(sum(ap1$data$AGE == levels(dat$AGE)[2]), 2)
   # Incomplete data has groups replaced with NA
-  expect_equal(sum(ap3$data$AGE == levels(dat$AGE)[2]), 0)
+  expect_equal(sum(ap3$data$n[ap3$data$AGE == levels(dat$AGE)[2]]), 0)
 })
 
 test_that("missing split data are removed before plotting", {
