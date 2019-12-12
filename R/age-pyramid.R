@@ -114,7 +114,8 @@
 #' age_pyramid(dat3, age_group = AGE)
 #' theme_set(old)
 age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
-                        stack_by = split_by, proportional = FALSE, na.rm = FALSE,
+                        stack_by = split_by, count = NULL,  
+                        proportional = FALSE, na.rm = FALSE,
                         show_halfway = TRUE, vertical_lines = FALSE,
                         horizontal_lines = TRUE, pyramid = TRUE,
                         pal = NULL) {
@@ -125,6 +126,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   age_group <- get_var(data, !!rlang::enquo(age_group))
   split_by  <- get_var(data, !!rlang::enquo(split_by))
   stack_by  <- get_var(data, !!rlang::enquo(stack_by))
+  count     <- get_var(data, !!rlang::enquo(count))
 
   if (!is_df && !is_svy) {
     msg <- sprintf("%s must be a data frame or  object", deparse(substitute(data)))
@@ -140,14 +142,18 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   st <- rlang::sym(stack_by)
 
   # Count the plot data --------------------------------------------------------
-  plot_data <- aggregate_by_age(
-    data,
-    age_group    = age_group,
-    stack_by     = stack_by,
-    split_by     = split_by,
-    proportional = proportional,
-    na.rm        = na.rm
-  )
+  if (length(count) == 0) {
+    plot_data <- aggregate_by_age(
+      data,
+      age_group    = age_group,
+      stack_by     = stack_by,
+      split_by     = split_by,
+      proportional = proportional,
+      na.rm        = na.rm
+    )
+  } else {
+    plot_data <- dplyr::rename(data, n = !!rlang::sym(count))
+  }
   # gathering the levels for each of the elements ------------------------------
   age_levels <- levels(plot_data[[age_group]])
   max_age_group <- age_levels[length(age_levels)]

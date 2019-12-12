@@ -56,9 +56,9 @@ download_maybe <- function(path) {
 #' @return a long census table`
 #'
 #' @examples
-#' x <- 'https://www2.census.gov/programs-surveys/demo/tables/age-and-sex/2018/age-sex-composition/2018gender_table1.xls'
-#' get_simple_pyramid(x, full = TRUE)
-#' get_simple_pyramid(x, full = FALSE)
+#' s <- 'https://www2.census.gov/programs-surveys/demo/tables/age-and-sex/2018/age-sex-composition/2018gender_table1.xls'
+#' get_simple_pyramid(s, full = TRUE)
+#' get_simple_pyramid(s, full = FALSE)
 get_simple_pyramid <- function(path, full = TRUE) {
   path     <- download_maybe(path)
   the_cols <- c('male_n', 'male_p', 'female_n', 'female_p')
