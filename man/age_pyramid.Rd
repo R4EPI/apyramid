@@ -9,6 +9,7 @@ age_pyramid(
   age_group = "age_group",
   split_by = "sex",
   stack_by = split_by,
+  count = NULL,
   proportional = FALSE,
   na.rm = FALSE,
   show_halfway = TRUE,
@@ -63,13 +64,23 @@ Plot a population pyramid (age-sex) from a dataframe.
 If the \code{split_by} variable is bivariate (e.g. an indicator for
 pregnancy), then the result will show up as a pyramid, otherwise, it will be
 presented as a facetted barplot with with empty bars in the background
-indicating the range of the un-facetted data set. Values of \code{spit_by} will
+indicating the range of the un-facetted data set. Values of \code{split_by} will
 show up as labels at top of each facet.
 }
 \examples{
+
 library(ggplot2)
 old <- theme_set(theme_classic(base_size = 18))
 
+# with pre-computed data
+data(us_age_gender_2018)
+age_pyramid(us_age_gender_2018, 
+            age_group = age,
+            split_by = gender,
+            count = count)
+
+
+# from linelist data
 set.seed(2018 - 01 - 15)
 ages <- cut(sample(80, 150, replace = TRUE),
   breaks = c(0, 5, 10, 30, 90), right = FALSE

@@ -48,9 +48,19 @@
 #' @importFrom rlang !!
 #' @export
 #' @examples
+#' 
 #' library(ggplot2)
 #' old <- theme_set(theme_classic(base_size = 18))
+#' 
+#' # with pre-computed data
+#' data(us_age_gender_2018)
+#' age_pyramid(us_age_gender_2018, 
+#'             age_group = age,
+#'             split_by = gender,
+#'             count = count)
+#' 
 #'
+#' # from linelist data
 #' set.seed(2018 - 01 - 15)
 #' ages <- cut(sample(80, 150, replace = TRUE),
 #'   breaks = c(0, 5, 10, 30, 90), right = FALSE

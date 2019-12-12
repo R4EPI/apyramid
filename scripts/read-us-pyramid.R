@@ -1,3 +1,8 @@
+# This set of functions will read in an excel data set from the US Census and
+# produce a table for use for testing. No guarantees that this works
+# The data I got was from here:
+# https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html
+#
 #' Process pyramid data from the US census
 #'
 #' @param age_table a single-column data frame that has ages in order with the
@@ -34,7 +39,7 @@ process_pyramids <- function(age_table, counts, what = "gender") {
 download_maybe <- function(path) {
   if (file.exists(path)) {
     return(path)
-  } else if (grepl("^https?://", path)) {
+  } else if (grepl("^https?\\://", path)) {
     tmp <- file.path(tempdir(), basename(path))
     res <- if (file.exists(tmp)) TRUE else download.file(path, tmp)
     if (res) {
@@ -83,7 +88,7 @@ get_simple_pyramid <- function(path, full = TRUE) {
 #'
 #' @examples
 #' x <- 'https://www2.census.gov/programs-surveys/demo/tables/age-and-sex/2018/age-sex-composition/2018gender_table12.xls'
-#' get_stratified_pyramid(x, what = "Generation")
+#' x <- get_stratified_pyramid(x, what = "Generation")
 get_stratified_pyramid <- function(path, what = "Generation") {
   path    <- download_maybe(path)
   males   <- cellranger::cell_limits(c(28, 4), c(46, NA))
@@ -104,6 +109,6 @@ get_stratified_pyramid <- function(path, what = "Generation") {
   female_table     <- process_pyramids(female_age_table, female_np, what = what)
 
   dplyr::bind_rows(male = male_table, female = female_table, .id = "gender") %>%
-    dplyr::arrange(age, !!rlang::sym(what), gender) %>%
+    dplyr::arrange(age, !!rlang::sym(what), desc(gender)) %>%
     dplyr::mutate(gender = forcats::fct_inorder(gender))
 }
