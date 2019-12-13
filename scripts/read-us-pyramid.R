@@ -3,6 +3,7 @@
 # The data I got was from here:
 # https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html
 #
+`%>%` <- magrittr::`%>%`
 #' Process pyramid data from the US census
 #'
 #' @param age_table a single-column data frame that has ages in order with the
@@ -41,7 +42,7 @@ download_maybe <- function(path) {
     return(path)
   } else if (grepl("^https?\\://", path)) {
     tmp <- file.path(tempdir(), basename(path))
-    res <- if (file.exists(tmp)) TRUE else download.file(path, tmp)
+    res <- if (file.exists(tmp)) TRUE else download.file(path, tmp) == 0
     if (res) {
       path <- tmp
     } else {
@@ -88,7 +89,7 @@ get_simple_pyramid <- function(path, full = TRUE) {
 #'
 #' @examples
 #' x <- 'https://www2.census.gov/programs-surveys/demo/tables/age-and-sex/2018/age-sex-composition/2018gender_table12.xls'
-#' x <- get_stratified_pyramid(x, what = "Generation")
+#' generation <- get_stratified_pyramid(x, what = "Generation")
 get_stratified_pyramid <- function(path, what = "Generation") {
   path    <- download_maybe(path)
   males   <- cellranger::cell_limits(c(28, 4), c(46, NA))
@@ -98,7 +99,7 @@ get_stratified_pyramid <- function(path, what = "Generation") {
                                    range = cellranger::cell_limits(c(6, 4), c(6, NA)),
                                    col_names = FALSE)
   categories <- as.character(categories)[!is.na(as.vector(categories))]
-  categories <- apply(expand.grid(categories, c("n", "p")), 1, paste, collapse = "_")
+  categories <- sort(apply(expand.grid(categories, c("n", "p")), 1, paste, collapse = "_"))
 
   male_np        <- readxl::read_excel(path, range = males, col_names = categories)
   male_age_table <- readxl::read_excel(path, range = "A28:A46", col_names = "age")
