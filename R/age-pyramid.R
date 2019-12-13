@@ -52,15 +52,29 @@
 #' library(ggplot2)
 #' old <- theme_set(theme_classic(base_size = 18))
 #' 
-#' # with pre-computed data
-#' data(us_age_gender_2018)
-#' age_pyramid(us_age_gender_2018, 
+#' # with pre-computed data ----------------------------------------------------
+#' # 2018 US census data by age and gender
+#' data(us_2018)
+#' age_pyramid(us_2018, 
 #'             age_group = age,
 #'             split_by = gender,
 #'             count = count)
-#' 
+#' # 2018 US census data by age, gender, and insurance status
+#' data(us_ins_2018)
+#' age_pyramid(us_ins_2018, 
+#'             age_group = age,
+#'             split_by = gender,
+#'             stack_by = insured,
+#'             count = count)
+#' us_ins_2018$prop <- us_ins_2018$percent/100
+#' age_pyramid(us_ins_2018,
+#'             age_group = age,
+#'             split_by = gender,
+#'             stack_by = insured,
+#'             count = prop,
+#'             proportion = TRUE)
 #'
-#' # from linelist data
+#' # from linelist data --------------------------------------------------------
 #' set.seed(2018 - 01 - 15)
 #' ages <- cut(sample(80, 150, replace = TRUE),
 #'   breaks = c(0, 5, 10, 30, 90), right = FALSE
@@ -194,17 +208,10 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   maxdata <- dplyr::tally(maxdata, wt = !!quote(n))
   max_n <- max(abs(maxdata[["n"]]), na.rm = TRUE)
 
-  # make sure the x axis is a multiple of ten. This took a lot of fiddling
   if (proportional) {
-    max_n <- ceiling(max_n * 100)
-    max_n <- max_n + if (max_n %% 10 == 0) 0 else (10 - max_n %% 10)
-    step_size <- if (max_n > 25) 0.1 else if (max_n > 15) 0.05 else 0.01
-    max_n <- max_n / 100
     lab_fun <- function(i) scales::percent(abs(i))
     y_lab <- "proportion"
   } else {
-    max_n <- max_n + if (max_n %% 10 == 0) 0 else (10 - max_n %% 10)
-    step_size <- ceiling(max_n / 5)
     lab_fun <- abs
     y_lab <- "counts"
   }
@@ -212,7 +219,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   stopifnot(is.finite(max_n), max_n > 0)
 
   # Make sure the breaks are correct for the plot size
-  the_breaks <- seq(0, max_n, step_size)
+  the_breaks <- pretty(c(0, max_n), min.n = 5)
   the_breaks <- if (split_measured_binary) c(-rev(the_breaks[-1]), the_breaks) else the_breaks
 
 
@@ -266,7 +273,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   }
   if (vertical_lines == TRUE) {
     pyramid <- pyramid +
-      geom_hline(yintercept = c(seq(-max_n, max_n, step_size)), linetype = "dotted", colour = "grey")
+      geom_hline(yintercept = the_breaks, linetype = "dotted", colour = "grey")
   }
 
 
@@ -297,7 +304,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
       annotate(
         geom = "label",
         x = max_age_group,
-        y = -step_size,
+        y = -diff(the_breaks)[1],
         vjust = 0.5,
         hjust = 1,
         label = split_levels[[1]]
@@ -305,7 +312,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
       annotate(
         geom = "label",
         x = max_age_group,
-        y = step_size,
+        y = diff(the_breaks)[1],
         vjust = 0.5,
         hjust = 0,
         label = split_levels[[2]]
