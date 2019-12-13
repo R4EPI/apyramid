@@ -20,29 +20,37 @@ to_character <- function(x) {
 #' @return the data frame, but maybe shorter
 #' @noRd
 #' @keywords internal
-treat_nas <- function(dat, age_group, split_by, stack_by, na.rm) {
+treat_nas <- function(data, age_group, split_by, stack_by, na.rm) {
 
-  if (anyNA(dat[[split_by]]) || anyNA(dat[[stack_by]])) {
-    nas <- is.na(dat[[split_by]]) | is.na(dat[[stack_by]])
-    warning(sprintf(
-      "removing %d observations with missing values between the %s and %s columns.",
-      sum(nas), split_by, stack_by
-    ))
-    dat <- dat[!nas, , drop = FALSE]
-  }
+  da_vars <- c(age_group, split_by, stack_by)
+  data    <- dplyr::select(data, da_vars)
+
   if (na.rm) {
-    nas <- is.na(dat[[age_group]])
-    warning(sprintf(
-      "removing %d observations with missing values from the %s column.",
-      sum(nas), age_group
-    ))
-    dat <- dat[!nas, , drop = FALSE]
+    missing   <- dplyr::mutate_at(data, .vars = da_vars, .funs = is.na)
+    sumissing <- colSums(missing)
+    if (any(sumissing > 0)) {
+      last  <- if (length(sumissing) > 2) ", and " else " and "
+      nmiss <- glue::glue("{sumissing} values from `{names(sumissing)}`")
+      nmiss <- glue::glue_collapse(nmiss, sep = ", ", last = last)
+      missing <- missing[[age_group]] | missing[[split_by]] | missing[[stack_by]]
+      msg     <- glue::glue("{sum(missing)} missing rows were removed ({nmiss}).")
+      warning(msg, call. = FALSE)
+      data    <- data[!missing, , drop = FALSE]
+    } else {
+      # 🤷
+    }
+    # Force any data that's not a factor to be a factor
+    data <- dplyr::mutate_if(data,
+                             .pred = Negate(is.factor),
+                             .funs = forcats::fct_inorder)
   } else {
-    dat[[age_group]] <- forcats::fct_explicit_na(dat[[age_group]])
+    # Force missing values to be "Missing"
+    data <- dplyr::mutate_at(data,
+                             .vars = da_vars,
+                             .funs = forcats::fct_explicit_na, "Missing")
   }
 
-  return(dat)
-
+  return(data)
 }
 
 force_factors <- function(plt, dat, split_by, stack_by) {

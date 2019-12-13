@@ -10,6 +10,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
+  fig.width = 12,
   out.width = "100%"
 )
 ```
@@ -36,25 +37,32 @@ install.packages("apyramid")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This can be used to visualize pre-aggregated data. This example is the US 
+census data from 2018:
 
-```{r example}
-# library(apyramid)
-## basic example code
+```{r us2018}
+library(apyramid)
+library(ggplot2)
+old_theme <- theme_set(theme_classic(base_size = 18))
+
+us_labels <- labs(x = "Age group", y = "Thousands of people")
+data(us_2018)
+us_2018
+p <- age_pyramid(us_2018, age_group = age, split_by = gender, count = count)
+p + us_labels
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+You can also use another factor to split the data:
 
-```{r cars}
-summary(cars)
+```{r us2018_factor}
+data(us_ins_2018) # stratified by gender and health insurance status
+data(us_gen_2018) # stratified by gender and generational status
+p_ins <- age_pyramid(us_ins_2018, age_group = age, split_by = gender, stack_by = insured, count = count)
+p_gen <- age_pyramid(us_gen_2018, age_group = age, split_by = gender, stack_by = generation, count = count)
+p_ins + us_labels
+p_gen + us_labels
+
+theme_set(old_theme)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

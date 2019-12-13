@@ -10,6 +10,10 @@
 #'
 #' @param stack_by the name of the column in the data frame to use for shading
 #'   the bars
+#' 
+#' @param count **for pre-computed data** the name of the column in the data
+#'   frame for the values of the bars. If this represents proportions, the
+#'   values should be within \[0, 1\].
 #'
 #' @param proportional If `TRUE`, bars will represent proportions of cases out
 #'   of the entire population. Otherwise (`FALSE`, default), bars represent
@@ -53,12 +57,12 @@
 #' old <- theme_set(theme_classic(base_size = 18))
 #' 
 #' # with pre-computed data ----------------------------------------------------
-#' # 2018 US census data by age and gender
+#' # 2018/2008 US census data by age and gender
 #' data(us_2018)
-#' age_pyramid(us_2018, 
-#'             age_group = age,
-#'             split_by = gender,
-#'             count = count)
+#' data(us_2008)
+#' age_pyramid(us_2018, age_group = age, split_by = gender, count = count)
+#' age_pyramid(us_2008, age_group = age, split_by = gender, count = count)
+#'
 #' # 2018 US census data by age, gender, and insurance status
 #' data(us_ins_2018)
 #' age_pyramid(us_ins_2018, 
@@ -139,7 +143,7 @@
 #' theme_set(old)
 age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
                         stack_by = split_by, count = NULL,  
-                        proportional = FALSE, na.rm = FALSE,
+                        proportional = FALSE, na.rm = TRUE,
                         show_halfway = TRUE, vertical_lines = FALSE,
                         horizontal_lines = TRUE, pyramid = TRUE,
                         pal = NULL) {
@@ -212,7 +216,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
     lab_fun <- function(i) scales::percent(abs(i))
     y_lab <- "proportion"
   } else {
-    lab_fun <- abs
+    lab_fun <- function(i) format(abs(i), big.mark = ",", trim = TRUE)
     y_lab <- "counts"
   }
 
@@ -273,7 +277,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   }
   if (vertical_lines == TRUE) {
     pyramid <- pyramid +
-      geom_hline(yintercept = the_breaks, linetype = "dotted", colour = "grey")
+      geom_hline(yintercept = the_breaks, linetype = "dotted", colour = "grey50")
   }
 
 

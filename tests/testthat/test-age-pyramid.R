@@ -81,6 +81,14 @@ apnp <- age_pyramid(dat, age_group = AGE, pyramid = FALSE)
 # missing data
 datd <- dat[dat$AGE != levels(dat$AGE)[2], , drop = FALSE]
 ap3 <- age_pyramid(datd, age_group = "AGE")
+data(us_2018, package = "apyramid")
+data(us_ins_2018, package = "apyramid")
+us_2018$prop <- us_2018$percent / 100
+us_ins_2018$prop <- us_ins_2018$percent / 100
+us2018c <- age_pyramid(us_2018, age, gender, count = count)
+us2018p <- age_pyramid(us_2018, age, gender, count = prop, proportion = TRUE)
+usi2018c <- age_pyramid(us_ins_2018, age, gender, insured, count = count)
+usi2018p <- age_pyramid(us_ins_2018, age, gender, insured, count = prop, proportion = TRUE)
 
 test_that("plots appear the same", {
   old <- ggplot2::theme_set(ggplot2::theme_classic(base_size = 18))
@@ -90,6 +98,10 @@ test_that("plots appear the same", {
   vdiffr::expect_doppelganger("missing age pyramid", ap3)
   vdiffr::expect_doppelganger("gender age pyramid", apg)
   vdiffr::expect_doppelganger("default no pyramid", apnp)
+  vdiffr::expect_doppelganger("us 2018 counts", us2018c)
+  vdiffr::expect_doppelganger("us 2018 proportions", us2018p)
+  vdiffr::expect_doppelganger("us insured 2018 counts", usi2018c)
+  vdiffr::expect_doppelganger("us insured 2018 proportions", usi2018p)
   ggplot2::theme_set(old)
 })
 
@@ -126,7 +138,7 @@ test_that("plot by ill works", {
   expect_true("ill" %in% colnames(ap2$data))
   expect_true("AGE" %in% colnames(ap2$data))
   expect_false("sex" %in% colnames(ap2$data))
-  expect_equal(unique(ap2$data$ill), as.character(0:1))
+  expect_equal(levels(ap2$data$ill), as.character(0:1))
 })
 
 test_that("missing levels are still plotted", {
@@ -139,7 +151,9 @@ test_that("missing levels are still plotted", {
 test_that("missing split data are removed before plotting", {
   dat$sex[69] <- NA
   expect_warning(
-    age_pyramid(dat, age_group = "AGE"),
-    "removing 1 observations with missing values between the sex and sex column"
+    age_pyramid(dat, age_group = "AGE", na.rm = TRUE),
+    "1 missing rows were removed (0 values from `AGE` and 1 values from `sex`)",
+    fixed = TRUE
   )
+  expect_silent(age_pyramid(dat, age_group = "AGE", na.rm = FALSE))
 })

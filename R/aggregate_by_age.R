@@ -48,9 +48,9 @@ aggregate_by_age <- function(data, age_group = "age_group", split_by = "sex",
                              stack_by = split_by, proportional = FALSE, 
                              na.rm = TRUE) {
 
-  age_group <- get_var(data, age_group)
-  split_by  <- get_var(data, split_by)
-  stack_by  <- get_var(data, stack_by)
+  age_group <- get_var(data, !!rlang::enquo(age_group))
+  split_by  <- get_var(data, !!rlang::enquo(split_by))
+  stack_by  <- get_var(data, !!rlang::enquo(stack_by))
 
   ag        <- rlang::sym(age_group)
   sb        <- rlang::sym(split_by)
@@ -61,9 +61,10 @@ aggregate_by_age <- function(data, age_group = "age_group", split_by = "sex",
     data[[stack_by]] <- to_character(data[[stack_by]])
     data             <- treat_nas(data, age_group, split_by, stack_by, na.rm)
 
-    plot_data <- dplyr::group_by(data, !!ag, !!sb, !!st, .drop = FALSE)
-    plot_data <- dplyr::summarise(plot_data, n = dplyr::n())
-    plot_data <- dplyr::ungroup(plot_data)
+    # plot_data <- dplyr::group_by(data, !!ag, !!sb, !!st, .drop = FALSE)
+    # plot_data <- dplyr::summarise(plot_data, n = dplyr::n())
+    # plot_data <- dplyr::ungroup(plot_data)
+    plot_data <- dplyr::count(data, !!ag, !!sb, !!st, .drop = FALSE)
     plot_data <- force_factors(plot_data, data, split_by, stack_by)
   } else if (inherits(data, "tbl_svy")) {
     if (!requireNamespace("srvyr")) {

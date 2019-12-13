@@ -9,6 +9,7 @@ Authors@R:
            comment = c(ORCID = "0000-0003-1458-7108"))
 Description: What the package does (one paragraph).
 License: GPL-3
+Depends: R (>= 3.2.0)
 Suggests: 
     testthat (>= 2.1.0),
     srvyr,
@@ -25,4 +26,5 @@ Imports:
     rlang,
     forcats,
     dplyr,
-    scales
+    scales,
+    glue

@@ -11,7 +11,7 @@ age_pyramid(
   stack_by = split_by,
   count = NULL,
   proportional = FALSE,
-  na.rm = FALSE,
+  na.rm = TRUE,
   show_halfway = TRUE,
   vertical_lines = FALSE,
   horizontal_lines = TRUE,
@@ -30,6 +30,10 @@ the bivariate column. Defaults to "sex". See NOTE}
 
 \item{stack_by}{the name of the column in the data frame to use for shading
 the bars}
+
+\item{count}{\strong{for pre-computed data} the name of the column in the data
+frame for the values of the bars. If this represents proportions, the
+values should be within [0, 1].}
 
 \item{proportional}{If \code{TRUE}, bars will represent proportions of cases out
 of the entire population. Otherwise (\code{FALSE}, default), bars represent
@@ -72,15 +76,29 @@ show up as labels at top of each facet.
 library(ggplot2)
 old <- theme_set(theme_classic(base_size = 18))
 
-# with pre-computed data
-data(us_age_gender_2018)
-age_pyramid(us_age_gender_2018, 
+# with pre-computed data ----------------------------------------------------
+# 2018/2008 US census data by age and gender
+data(us_2018)
+data(us_2008)
+age_pyramid(us_2018, age_group = age, split_by = gender, count = count)
+age_pyramid(us_2008, age_group = age, split_by = gender, count = count)
+
+# 2018 US census data by age, gender, and insurance status
+data(us_ins_2018)
+age_pyramid(us_ins_2018, 
             age_group = age,
             split_by = gender,
+            stack_by = insured,
             count = count)
+us_ins_2018$prop <- us_ins_2018$percent/100
+age_pyramid(us_ins_2018,
+            age_group = age,
+            split_by = gender,
+            stack_by = insured,
+            count = prop,
+            proportion = TRUE)
 
-
-# from linelist data
+# from linelist data --------------------------------------------------------
 set.seed(2018 - 01 - 15)
 ages <- cut(sample(80, 150, replace = TRUE),
   breaks = c(0, 5, 10, 30, 90), right = FALSE
