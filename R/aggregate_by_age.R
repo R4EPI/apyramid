@@ -52,6 +52,10 @@ aggregate_by_age <- function(data, age_group = "age_group", split_by = "sex",
   split_by  <- get_var(data, !!rlang::enquo(split_by))
   stack_by  <- get_var(data, !!rlang::enquo(stack_by))
 
+  if (length(stack_by) == 0) {
+    stack_by <- split_by
+  }
+
   ag        <- rlang::sym(age_group)
   sb        <- rlang::sym(split_by)
   st        <- rlang::sym(stack_by)

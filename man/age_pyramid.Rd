@@ -8,7 +8,7 @@ age_pyramid(
   data,
   age_group = "age_group",
   split_by = "sex",
-  stack_by = split_by,
+  stack_by = NULL,
   count = NULL,
   proportional = FALSE,
   na.rm = TRUE,
@@ -29,7 +29,8 @@ group categories. Defaults to "age_group"}
 the bivariate column. Defaults to "sex". See NOTE}
 
 \item{stack_by}{the name of the column in the data frame to use for shading
-the bars}
+the bars. Defaults to \code{NULL}, which will shade the bars by the \code{split_by}
+variable.}
 
 \item{count}{\strong{for pre-computed data} the name of the column in the data
 frame for the values of the bars. If this represents proportions, the

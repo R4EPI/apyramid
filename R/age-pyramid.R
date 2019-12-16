@@ -9,7 +9,8 @@
 #'   the bivariate column. Defaults to "sex". See NOTE
 #'
 #' @param stack_by the name of the column in the data frame to use for shading
-#'   the bars
+#'   the bars. Defaults to `NULL`, which will shade the bars by the `split_by`
+#'   variable.
 #' 
 #' @param count **for pre-computed data** the name of the column in the data
 #'   frame for the values of the bars. If this represents proportions, the
@@ -142,7 +143,7 @@
 #' age_pyramid(dat3, age_group = AGE)
 #' theme_set(old)
 age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
-                        stack_by = split_by, count = NULL,  
+                        stack_by = NULL, count = NULL,  
                         proportional = FALSE, na.rm = TRUE,
                         show_midpoint = TRUE, vertical_lines = FALSE,
                         horizontal_lines = TRUE, pyramid = TRUE,
@@ -163,6 +164,10 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
 
   if (!is.factor(data[[age_group]])) {
     stop("age group must be a factor")
+  }
+
+  if (length(stack_by) == 0) {
+    stack_by <- split_by
   }
 
   ag <- rlang::sym(age_group)
