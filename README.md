@@ -32,15 +32,79 @@ install.packages("apyramid")
 
 ## Example
 
-This can be used to visualize pre-aggregated data. This example is the
-US census data from 2018:
+The {apyramid} package was primarily designed for quick visualisation of
+un-aggregated linelist data in field epidemiological situations.
 
 ``` r
-library(apyramid)
-library(ggplot2)
+library("outbreaks")
+library("apyramid")
+library("ggplot2")
 old_theme <- theme_set(theme_classic(base_size = 18))
 
-us_labels <- labs(x = "Age group", y = "Thousands of people")
+flu <- outbreaks::fluH7N9_china_2013
+
+# data preparation (create age groups from ages)
+autocut <- function(x) {
+  cut(x, breaks = pretty(x), right = TRUE, include.lowest = TRUE)
+}
+flu$age_group <- autocut(as.integer(flu$age))
+levels(flu$gender) <- c("Female", "Male")
+head(flu)
+#>   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome
+#> 1       1    2013-02-19                    <NA>      2013-03-04   Death
+#> 2       2    2013-02-27              2013-03-03      2013-03-10   Death
+#> 3       3    2013-03-09              2013-03-19      2013-04-09   Death
+#> 4       4    2013-03-19              2013-03-27            <NA>    <NA>
+#> 5       5    2013-03-19              2013-03-30      2013-05-15 Recover
+#> 6       6    2013-03-21              2013-03-28      2013-04-26   Death
+#>   gender age province age_group
+#> 1   Male  87 Shanghai   (50,60]
+#> 2   Male  27 Shanghai    [0,10]
+#> 3 Female  35    Anhui   (10,20]
+#> 4 Female  45  Jiangsu   (10,20]
+#> 5 Female  48  Jiangsu   (10,20]
+#> 6 Female  32  Jiangsu    [0,10]
+
+flup <- age_pyramid(flu, age_group, split_by = gender)
+#> Warning: 2 missing rows were removed (0 values from `age_group` and 2
+#> values from `gender`).
+flup
+```
+
+<img src="man/figures/README-flu-1.png" width="100%" />
+
+Since the result is a ggplot2 object, it can be customized like one:
+
+``` r
+flup + 
+  scale_fill_grey(guide = guide_legend(order = 1)) + 
+  theme(text = element_text(size = 18, family = "serif")) + 
+  theme(panel.background = element_rect(fill = "#ccffff")) + 
+  theme(plot.background = element_rect(fill = "#ffffcc")) + 
+  theme(legend.background = element_blank()) +
+  labs(
+    x       = "Age group (years)",
+    y       = "Number of cases",
+    fill    = "Gender",
+    title   = "136 cases of influenza A H7N9 in China",
+    caption = "Source: https://doi.org/10.5061/dryad.2g43n"
+  )
+#> Scale for 'fill' is already present. Adding another scale for 'fill',
+#> which will replace the existing scale.
+```
+
+<img src="man/figures/README-flu2-1.png" width="100%" />
+
+This can also be used to visualize pre-aggregated data. This example is
+the US census data from 2018:
+
+``` r
+
+us_labels <- labs(
+  x = "Age group", 
+  y = "Thousands of people", 
+  title = "US Cenus Data 2018",
+  caption = "source: https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html")
 data(us_2018)
 us_2018
 #> # A tibble: 36 x 4
