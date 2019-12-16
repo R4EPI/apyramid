@@ -12,7 +12,7 @@ age_pyramid(
   count = NULL,
   proportional = FALSE,
   na.rm = TRUE,
-  show_halfway = TRUE,
+  show_midpoint = TRUE,
   vertical_lines = FALSE,
   horizontal_lines = TRUE,
   pyramid = TRUE,
@@ -42,7 +42,7 @@ case counts}
 \item{na.rm}{If \code{TRUE}, this removes NA counts from the age groups. Defaults
 to \code{TRUE}.}
 
-\item{show_halfway}{When \code{TRUE} (default), a dashed vertical line will be
+\item{show_midpoint}{When \code{TRUE} (default), a dashed vertical line will be
 added to each of the age bars showing the halfway point for the
 un-stratified age group. When \code{FALSE}, no halfway point is marked.}
 

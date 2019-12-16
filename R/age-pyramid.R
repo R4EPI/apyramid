@@ -22,7 +22,7 @@
 #' @param na.rm  If `TRUE`, this removes NA counts from the age groups. Defaults
 #'   to `TRUE`.
 #'
-#' @param show_halfway When `TRUE` (default), a dashed vertical line will be
+#' @param show_midpoint When `TRUE` (default), a dashed vertical line will be
 #'   added to each of the age bars showing the halfway point for the
 #'   un-stratified age group. When `FALSE`, no halfway point is marked.
 #'
@@ -144,7 +144,7 @@
 age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
                         stack_by = split_by, count = NULL,  
                         proportional = FALSE, na.rm = TRUE,
-                        show_halfway = TRUE, vertical_lines = FALSE,
+                        show_midpoint = TRUE, vertical_lines = FALSE,
                         horizontal_lines = TRUE, pyramid = TRUE,
                         pal = NULL) {
 
@@ -281,7 +281,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   }
 
 
-  if (show_halfway) {
+  if (show_midpoint) {
     maxdata <- dplyr::arrange(maxdata, !!ag)
     maxdata[["x"]] <- seq_along(maxdata[[age_group]]) - 0.25
     maxdata[["xend"]] <- maxdata[["x"]] + 0.5
