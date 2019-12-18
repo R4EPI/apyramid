@@ -89,10 +89,11 @@ us2018c <- age_pyramid(us_2018, age, gender, count = count)
 us2018p <- age_pyramid(us_2018, age, gender, count = prop, proportion = TRUE)
 usi2018c <- age_pyramid(us_ins_2018, age, gender, insured, count = count)
 usi2018p <- age_pyramid(us_ins_2018, age, gender, insured, count = prop, proportion = TRUE)
+us2018pal <- age_pyramid(us_2018, age, gender, count = count, pal = c("#FFFF55", "#55FFFF"), vertical_lines = TRUE)
 
 test_that("plots appear the same", {
-  old <- ggplot2::theme_set(ggplot2::theme_classic(base_size = 18))
   skip_if_not_installed("vdiffr")
+  old <- ggplot2::theme_set(ggplot2::theme_classic(base_size = 18))
   vdiffr::expect_doppelganger("default age pyramid", ap1)
   vdiffr::expect_doppelganger("ill age pyramid", ap2)
   vdiffr::expect_doppelganger("missing age pyramid", ap3)
@@ -102,6 +103,7 @@ test_that("plots appear the same", {
   vdiffr::expect_doppelganger("us 2018 proportions", us2018p)
   vdiffr::expect_doppelganger("us insured 2018 counts", usi2018c)
   vdiffr::expect_doppelganger("us insured 2018 proportions", usi2018p)
+  vdiffr::expect_doppelganger("with custom palette and vertical lines", us2018pal)
   ggplot2::theme_set(old)
 })
 
@@ -109,6 +111,17 @@ test_that("plots appear the same", {
 test_that("age pyramid returns a ggplot2 object", {
   expect_is(ap1, "ggplot")
   expect_is(ap2, "ggplot")
+})
+
+test_that("errors are thrown with invalid inputs", {
+
+  expect_error(age_pyramid(as.matrix(us_2018), age, gender, count = count),
+               "as.matrix(us_2018) must be a data frame or tbl_svy object",
+               fixed = TRUE)
+
+  expect_error(age_pyramid(us_2018, count, age, count = gender),
+               "age group must be a factor")
+
 })
 
 test_that("toggling pyramid will turn off the pyramid", {
@@ -156,4 +169,21 @@ test_that("missing split data are removed before plotting", {
     fixed = TRUE
   )
   expect_silent(age_pyramid(dat, age_group = "AGE", na.rm = FALSE))
+})
+
+test_that("survey data is accounted for", {
+  skip_if_not_installed("vdiffr")
+  skip_if_not_installed("srvyr")
+  old <- ggplot2::theme_set(ggplot2::theme_classic(base_size = 18))
+    
+  data("api", package = "survey")
+
+  dstrata <- srvyr::mutate(apistrat, 
+     apicat = cut(api00, pretty(api00), include.lowest = TRUE, right = TRUE))
+  dstrata <- srvyr::as_survey_design(dstrata, strata = stype, weights = pw)
+   
+  srv <- age_pyramid(dstrata, apicat, split_by = stype)
+  vdiffr::expect_doppelganger("Survey data", srv)
+  ggplot2::theme_set(old)
+
 })

@@ -1,7 +1,14 @@
-get_var <- function(dat, var) {
-  if (!inherits(dat, c("data.frame", "tbl_svy"))) {
-    stop("Input must be a data frame", call. = FALSE)
+stop_if_not_df_or_svy <- function(data, name = deparse(substitute(data))) {
+  is_df <- is.data.frame(data)
+  is_svy <- inherits(data, "tbl_svy")
+  if (!is_df && !is_svy) {
+    msg <- sprintf("%s must be a data frame or tbl_svy object", name)
+    stop(msg, call. = FALSE)
   }
+  invisible(NULL)
+}
+
+get_var <- function(dat, var) {
   tidyselect::vars_select(colnames(dat), !!rlang::enquo(var))
 }
 

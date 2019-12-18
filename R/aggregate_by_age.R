@@ -45,8 +45,10 @@
 #'                  proportional = TRUE,
 #'                  na.rm = FALSE)
 aggregate_by_age <- function(data, age_group = "age_group", split_by = "sex",
-                             stack_by = split_by, proportional = FALSE, 
+                             stack_by = NULL, proportional = FALSE, 
                              na.rm = TRUE) {
+
+  stop_if_not_df_or_svy(data, deparse(substitute(data)))
 
   age_group <- get_var(data, !!rlang::enquo(age_group))
   split_by  <- get_var(data, !!rlang::enquo(split_by))

@@ -149,18 +149,14 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
                         horizontal_lines = TRUE, pyramid = TRUE,
                         pal = NULL) {
 
-  is_df <- is.data.frame(data)
-  is_svy <- inherits(data, "tbl_svy")
+
+  stop_if_not_df_or_svy(data, deparse(substitute(data)))
 
   age_group <- get_var(data, !!rlang::enquo(age_group))
   split_by  <- get_var(data, !!rlang::enquo(split_by))
   stack_by  <- get_var(data, !!rlang::enquo(stack_by))
   count     <- get_var(data, !!rlang::enquo(count))
 
-  if (!is_df && !is_svy) {
-    msg <- sprintf("%s must be a data frame or  object", deparse(substitute(data)))
-    stop(msg)
-  }
 
   if (!is.factor(as.data.frame(data)[[age_group]])) {
     stop("age group must be a factor")
@@ -268,9 +264,10 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   }
   pyramid <- pyramid +
     scale_y_continuous(
-      limits = if (split_measured_binary) c(-max_n, max_n) else c(0, max_n),
+      limits = if (split_measured_binary) range(the_breaks) else c(0, max_n),
       breaks = the_breaks,
-      labels = lab_fun
+      labels = lab_fun,
+      expand = ggplot2::expand_scale(mult = 0.02, add = 0)
     ) +
     scale_x_discrete(drop = FALSE) # note: drop = FALSE important to avoid missing age groups
 

@@ -1,5 +1,7 @@
 test_that('errors are thrown properly', {
-  expect_error(aggregate_by_age(iris$Species), "Input must be a data frame")
+  expect_error(aggregate_by_age(iris$Species), 
+               "iris$Species must be a data frame or tbl_svy object",
+               fixed = TRUE)
 })
 
 get_flu <- function() {

@@ -8,7 +8,7 @@ aggregate_by_age(
   data,
   age_group = "age_group",
   split_by = "sex",
-  stack_by = split_by,
+  stack_by = NULL,
   proportional = FALSE,
   na.rm = TRUE
 )
