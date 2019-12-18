@@ -162,7 +162,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
     stop(msg)
   }
 
-  if (!is.factor(data[[age_group]])) {
+  if (!is.factor(as.data.frame(data)[[age_group]])) {
     stop("age group must be a factor")
   }
 

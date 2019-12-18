@@ -1,5 +1,5 @@
 get_var <- function(dat, var) {
-  if (!inherits(dat, c("data.frame", "tbl_srvy"))) {
+  if (!inherits(dat, c("data.frame", "tbl_svy"))) {
     stop("Input must be a data frame", call. = FALSE)
   }
   tidyselect::vars_select(colnames(dat), !!rlang::enquo(var))

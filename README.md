@@ -19,15 +19,18 @@ status](https://ci.appveyor.com/api/projects/status/github/R4EPI/apyramid?branch
 coverage](https://codecov.io/gh/R4EPI/apyramid/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/apyramid?branch=master)
 <!-- badges: end -->
 
-The goal of apyramid is to …
+The goal of apyramid is to provide a quick method for visualizing census
+data stratified by age and one or two categorical variables (e.g. gender
+and health status).
 
 ## Installation
 
-You can install the released version of apyramid from
-[CRAN](https://CRAN.R-project.org) with:
+{apyramid} is not currently on CRAN, but you can install it from the
+R4EPIs GitHub page like so:
 
 ``` r
-install.packages("apyramid")
+# install.packages('remotes')
+remotes::install_github("R4EPI/apyramid")
 ```
 
 ## Example
@@ -95,8 +98,21 @@ flup +
 
 <img src="man/figures/README-flu2-1.png" width="100%" />
 
-This can also be used to visualize pre-aggregated data. This example is
-the US census data from 2018:
+One of the advantages of {apyramid} is that it will adjust to account
+for non-binary categorical variables. For example, in the flu data set,
+there are two cases with no gender reported. If we set `na.rm = FALSE`,
+we can the age distribution of these two cases:
+
+``` r
+age_pyramid(flu, age_group, split_by = gender, na.rm = FALSE)
+```
+
+<img src="man/figures/README-flu3-1.png" width="100%" />
+
+## Pre-aggregated data
+
+{apyramid} can also be used to visualize pre-aggregated data. This
+example is the US census data from 2018:
 
 ``` r
 
@@ -149,3 +165,23 @@ p_gen + us_labels
 
 theme_set(old_theme)
 ```
+
+## Survey Data
+
+Beyond that, survey data can be incorporated with the help of srvyr.
+Note that while it will show the weighted counts, it will not show the
+confidence intervals as that highly depends on the appropriate choice of
+CI estimator. This is meant as more of quick visualization tool for EDA.
+
+``` r
+library(srvyr, warn.conflicts = FALSE)
+data(api, package = "survey")
+
+dstrata <- apistrat %>%
+   mutate(apicat = cut(api00, pretty(api00), include.lowest = TRUE, right = TRUE)) %>%
+   as_survey_design(strata = stype, weights = pw)
+ 
+age_pyramid(dstrata, apicat, split_by = stype)
+```
+
+<img src="man/figures/README-srvyr-1.png" width="100%" />
