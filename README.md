@@ -19,7 +19,7 @@ status](https://ci.appveyor.com/api/projects/status/github/R4EPI/apyramid?branch
 coverage](https://codecov.io/gh/R4EPI/apyramid/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/apyramid?branch=master)
 <!-- badges: end -->
 
-The goal of apyramid is to provide a quick method for visualizing census
+The goal of {apyramid} is to provide a quick method for visualizing census
 data stratified by age and one or two categorical variables (e.g. gender
 and health status).
 

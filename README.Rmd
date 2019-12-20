@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/R4EPI/apyramid/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/apyramid?branch=master)
 <!-- badges: end -->
 
-The goal of apyramid is to provide a quick method for visualizing census data
+The goal of {apyramid} is to provide a quick method for visualizing census data
 stratified by age and one or two categorical variables (e.g. gender and health
 status).
 
