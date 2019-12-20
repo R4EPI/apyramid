@@ -20,7 +20,8 @@
 #'   to `TRUE`.
 #'
 #' @return a data frame with counts aggregated by age
-#' @export
+#' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' set.seed(2018 - 01 - 15)
@@ -50,9 +51,9 @@ aggregate_by_age <- function(data, age_group = "age_group", split_by = "sex",
 
   stop_if_not_df_or_svy(data, deparse(substitute(data)))
 
-  age_group <- get_var(data, !!rlang::enquo(age_group))
-  split_by  <- get_var(data, !!rlang::enquo(split_by))
-  stack_by  <- get_var(data, !!rlang::enquo(stack_by))
+  # age_group <- get_var(data, !!rlang::enquo(age_group))
+  # split_by  <- get_var(data, !!rlang::enquo(split_by))
+  # stack_by  <- get_var(data, !!rlang::enquo(stack_by))
 
   if (length(stack_by) == 0) {
     stack_by <- split_by

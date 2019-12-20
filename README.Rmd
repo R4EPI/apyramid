@@ -42,7 +42,11 @@ remotes::install_github("R4EPI/apyramid")
 ## Example
 
 The {apyramid} package was primarily designed for quick visualisation of
-un-aggregated linelist data in field epidemiological situations. 
+un-aggregated linelist data in field epidemiological situations. It has one
+available function:
+
+ - `age_pyramid()` returns age pyramid visualizations of linelist, survey, or
+   pre-aggregated census data.
 
 ```{r flu}
 library("outbreaks")
@@ -63,6 +67,8 @@ head(flu)
 flup <- age_pyramid(flu, age_group, split_by = gender)
 flup
 ```
+
+
 
 Since the result is a ggplot2 object, it can be customized like one:
 
@@ -119,8 +125,6 @@ p_ins <- age_pyramid(us_ins_2018, age_group = age, split_by = gender, stack_by =
 p_gen <- age_pyramid(us_gen_2018, age_group = age, split_by = gender, stack_by = generation, count = count)
 p_ins + us_labels
 p_gen + us_labels
-
-theme_set(old_theme)
 ```
 
 Survey Data
@@ -140,6 +144,8 @@ dstrata <- apistrat %>%
    as_survey_design(strata = stype, weights = pw)
  
 age_pyramid(dstrata, apicat, split_by = stype)
+
+theme_set(old_theme)
 ```
 
 

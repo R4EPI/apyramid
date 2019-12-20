@@ -19,9 +19,9 @@ status](https://ci.appveyor.com/api/projects/status/github/R4EPI/apyramid?branch
 coverage](https://codecov.io/gh/R4EPI/apyramid/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/apyramid?branch=master)
 <!-- badges: end -->
 
-The goal of {apyramid} is to provide a quick method for visualizing census
-data stratified by age and one or two categorical variables (e.g. gender
-and health status).
+The goal of {apyramid} is to provide a quick method for visualizing
+census data stratified by age and one or two categorical variables
+(e.g. gender and health status).
 
 ## Installation
 
@@ -36,7 +36,13 @@ remotes::install_github("R4EPI/apyramid")
 ## Example
 
 The {apyramid} package was primarily designed for quick visualisation of
-un-aggregated linelist data in field epidemiological situations.
+un-aggregated linelist data in field epidemiological situations. It has
+one available function:
+
+  - `age_pyramid()` returns age pyramid visualizations of linelist,
+    survey, or pre-aggregated census data.
+
+<!-- end list -->
 
 ``` r
 library("outbreaks")
@@ -161,11 +167,6 @@ p_gen + us_labels
 
 <img src="man/figures/README-us2018_factor-2.png" width="100%" />
 
-``` r
-
-theme_set(old_theme)
-```
-
 ## Survey Data
 
 Beyond that, survey data can be incorporated with the help of srvyr.
@@ -185,3 +186,8 @@ age_pyramid(dstrata, apicat, split_by = stype)
 ```
 
 <img src="man/figures/README-srvyr-1.png" width="100%" />
+
+``` r
+
+theme_set(old_theme)
+```
