@@ -59,24 +59,24 @@ autocut <- function(x) {
 flu$age_group <- autocut(as.integer(flu$age))
 levels(flu$gender) <- c("Female", "Male")
 head(flu)
-#>   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome
-#> 1       1    2013-02-19                    <NA>      2013-03-04   Death
-#> 2       2    2013-02-27              2013-03-03      2013-03-10   Death
-#> 3       3    2013-03-09              2013-03-19      2013-04-09   Death
-#> 4       4    2013-03-19              2013-03-27            <NA>    <NA>
-#> 5       5    2013-03-19              2013-03-30      2013-05-15 Recover
-#> 6       6    2013-03-21              2013-03-28      2013-04-26   Death
-#>   gender age province age_group
-#> 1   Male  87 Shanghai   (50,60]
-#> 2   Male  27 Shanghai    [0,10]
-#> 3 Female  35    Anhui   (10,20]
-#> 4 Female  45  Jiangsu   (10,20]
-#> 5 Female  48  Jiangsu   (10,20]
-#> 6 Female  32  Jiangsu    [0,10]
+#>   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome gender
+#> 1       1    2013-02-19                    <NA>      2013-03-04   Death   Male
+#> 2       2    2013-02-27              2013-03-03      2013-03-10   Death   Male
+#> 3       3    2013-03-09              2013-03-19      2013-04-09   Death Female
+#> 4       4    2013-03-19              2013-03-27            <NA>    <NA> Female
+#> 5       5    2013-03-19              2013-03-30      2013-05-15 Recover Female
+#> 6       6    2013-03-21              2013-03-28      2013-04-26   Death Female
+#>   age province age_group
+#> 1  87 Shanghai   (50,60]
+#> 2  27 Shanghai    [0,10]
+#> 3  35    Anhui   (10,20]
+#> 4  45  Jiangsu   (10,20]
+#> 5  48  Jiangsu   (10,20]
+#> 6  32  Jiangsu    [0,10]
 
 flup <- age_pyramid(flu, age_group, split_by = gender)
-#> Warning: 2 missing rows were removed (0 values from `age_group` and 2
-#> values from `gender`).
+#> Warning: 2 missing rows were removed (0 values from `age_group` and 2 values
+#> from `gender`).
 flup
 ```
 
@@ -98,8 +98,8 @@ flup +
     title   = "136 cases of influenza A H7N9 in China",
     caption = "Source: https://doi.org/10.5061/dryad.2g43n"
   )
-#> Scale for 'fill' is already present. Adding another scale for 'fill',
-#> which will replace the existing scale.
+#> Scale for 'fill' is already present. Adding another scale for 'fill', which
+#> will replace the existing scale.
 ```
 
 <img src="man/figures/README-flu2-1.png" width="100%" />
@@ -191,3 +191,13 @@ age_pyramid(dstrata, apicat, split_by = stype)
 
 theme_set(old_theme)
 ```
+
+### Related work
+
+Population pyramids are common tools for epidemiologists and there are
+several solutions in R. To our knowledge, the {apyramid} package is the
+only one that allows for non-binary splitting
+    variable.
+
+  - [pyramid::pyramid()](https://cran.r-project.org/package=pyramid)
+  - [epiDisplay::pyramid()](https://cran.r-project.org/package=epiDisplay)

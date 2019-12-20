@@ -12,9 +12,9 @@ Authors@R: c(
            role = c("ctb")))
 Description: The goal of this package is to provide a quick method for
     visualizing un-aggregated line list or aggregated census data stratified by
-    age and one or two categorical variables (e.g.  gender and health status).
-    It returns a 'ggplot' object, allowing the user to further customize the
-    output. This package is part of the 'R4Epis' project.
+    age and one or two categorical variables (e.g. gender and health status)
+    with any number of values. It returns a 'ggplot' object, allowing the user
+    to further customize the output. This package is part of the 'R4Epis' project.
 License: GPL-3
 Depends: R (>= 3.2.0)
 URL: https://github.com/R4EPI/apyramid, https://r4epis.netlify.com

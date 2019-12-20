@@ -148,5 +148,11 @@ age_pyramid(dstrata, apicat, split_by = stype)
 theme_set(old_theme)
 ```
 
+### Related work
 
+Population pyramids are common tools for epidemiologists and there are several
+solutions in R. To our knowledge, the {apyramid} package is the only one that
+allows for non-binary splitting variable.
 
+ - [pyramid::pyramid()](https://cran.r-project.org/package=pyramid)
+ - [epiDisplay::pyramid()](https://cran.r-project.org/package=epiDisplay)
