@@ -9,3 +9,6 @@
 ^appveyor\.yml$
 ^codecov\.yml$
 ^scripts/
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
