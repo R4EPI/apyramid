@@ -11,7 +11,7 @@ Authors@R: c(
            family = "Spina",
            role = c("ctb")))
 Description: The goal of this package is to provide a quick method for
-    visualizing un-aggregated line list or aggregated census data stratified by
+    visualizing non-aggregated line-list or aggregated census data stratified by
     age and one or two categorical variables (e.g. gender and health status)
     with any number of values. It returns a 'ggplot' object, allowing the user
     to further customize the output. This package is part of the 'R4Epis' project.
