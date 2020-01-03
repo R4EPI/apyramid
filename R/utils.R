@@ -44,7 +44,7 @@ treat_nas <- function(data, age_group, split_by, stack_by, na.rm) {
       warning(msg, call. = FALSE)
       data    <- data[!missing, , drop = FALSE]
     } else {
-      # 🤷
+      # :shrug:
     }
     # Force any data that's not a factor to be a factor
     data <- dplyr::mutate_if(data,
