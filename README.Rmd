@@ -5,14 +5,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  fig.width = 12,
-  out.width = "100%"
-)
+```{r setup-hunk, child="man/rmdhunks/setup.Rmd"}
 ```
 
 # apyramid
@@ -25,134 +18,21 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/R4EPI/apyramid/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/apyramid?branch=master)
 <!-- badges: end -->
 
-The goal of {apyramid} is to provide a quick method for visualizing census data
-stratified by age and one or two categorical variables (e.g. gender and health
-status).
-
-## Installation
-
-{apyramid} is not currently on CRAN, but you can install it from the R4EPIs 
-GitHub page like so:
-
-``` r
-# install.packages('remotes')
-remotes::install_github("R4EPI/apyramid")
+<!--
+NOTE: If you want to change anything here, please edit the files listed below.
+-->
+```{r introduction-hunk, child="man/rmdhunks/introduction.Rmd"}
 ```
 
-## Example
-
-The {apyramid} package was primarily designed for quick visualisation of
-un-aggregated linelist data in field epidemiological situations. It has one
-available function:
-
- - `age_pyramid()` returns age pyramid visualizations of linelist, survey, or
-   pre-aggregated census data.
-
-```{r flu}
-library("outbreaks")
-library("apyramid")
-library("ggplot2")
-old_theme <- theme_set(theme_classic(base_size = 18))
-
-flu <- outbreaks::fluH7N9_china_2013
-
-# data preparation (create age groups from ages)
-autocut <- function(x) {
-  cut(x, breaks = pretty(x), right = TRUE, include.lowest = TRUE)
-}
-flu$age_group <- autocut(as.integer(flu$age))
-levels(flu$gender) <- c("Female", "Male")
-head(flu)
-
-flup <- age_pyramid(flu, age_group, split_by = gender)
-flup
+```{r linelist-example-hunk, child="man/rmdhunks/linelist-example.Rmd"}
 ```
 
-
-
-Since the result is a ggplot2 object, it can be customized like one:
-
-```{r flu2}
-flup + 
-  scale_fill_grey(guide = guide_legend(order = 1)) + 
-  theme(text = element_text(size = 18, family = "serif")) + 
-  theme(panel.background = element_rect(fill = "#ccffff")) + 
-  theme(plot.background = element_rect(fill = "#ffffcc")) + 
-  theme(legend.background = element_blank()) +
-  labs(
-    x       = "Age group (years)",
-    y       = "Number of cases",
-    fill    = "Gender",
-    title   = "136 cases of influenza A H7N9 in China",
-    caption = "Source: https://doi.org/10.5061/dryad.2g43n"
-  )
+```{r pre-aggregated-example-hunk, child = "man/rmdhunks/pre-aggregated-example.Rmd"}
 ```
 
-One of the advantages of {apyramid} is that it will adjust to account for 
-non-binary categorical variables. For example, in the flu data set, there are
-two cases with no gender reported. If we set `na.rm = FALSE`, we can the age
-distribution of these two cases:
-
-```{r flu3}
-age_pyramid(flu, age_group, split_by = gender, na.rm = FALSE)
+```{r survey-example-hunk, child="man/rmdhunks/survey-example.Rmd"}
 ```
 
-Pre-aggregated data
--------------------
-
-{apyramid} can also be used to visualize pre-aggregated data. This example is
-the US census data from 2018:
-
-```{r us2018}
-
-us_labels <- labs(
-  x = "Age group", 
-  y = "Thousands of people", 
-  title = "US Cenus Data 2018",
-  caption = "source: https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html")
-data(us_2018)
-us_2018
-p <- age_pyramid(us_2018, age_group = age, split_by = gender, count = count)
-p + us_labels
+```{r related-packages-hunk, child="man/rmdhunks/related-packages.Rmd"}
 ```
 
-You can also use another factor to split the data:
-
-```{r us2018_factor}
-data(us_ins_2018) # stratified by gender and health insurance status
-data(us_gen_2018) # stratified by gender and generational status
-p_ins <- age_pyramid(us_ins_2018, age_group = age, split_by = gender, stack_by = insured, count = count)
-p_gen <- age_pyramid(us_gen_2018, age_group = age, split_by = gender, stack_by = generation, count = count)
-p_ins + us_labels
-p_gen + us_labels
-```
-
-Survey Data
------------
-
-Beyond that, survey data can be incorporated with the help of srvyr. Note that
-while it will show the weighted counts, it will not show the confidence
-intervals as that highly depends on the appropriate choice of CI estimator. This
-is meant as more of quick visualization tool for EDA. 
-
-```{r srvyr}
-library(srvyr, warn.conflicts = FALSE)
-data(api, package = "survey")
-
-dstrata <- apistrat %>%
-   mutate(apicat = cut(api00, pretty(api00), include.lowest = TRUE, right = TRUE)) %>%
-   as_survey_design(strata = stype, weights = pw)
- 
-age_pyramid(dstrata, apicat, split_by = stype)
-
-theme_set(old_theme)
-```
-
-### Related work
-
-Population pyramids are common tools for epidemiologists and there are several
-solutions in R. To our knowledge, the {apyramid} package is the only one that
-allows for non-binary splitting variable.
-
- - [pyramid::pyramid()](https://cran.r-project.org/package=pyramid)
- - [epiDisplay::pyramid()](https://cran.r-project.org/package=epiDisplay)

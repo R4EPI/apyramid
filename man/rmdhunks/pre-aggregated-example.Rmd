@@ -1,0 +1,31 @@
+Pre-aggregated data
+-------------------
+
+{apyramid} can also be used to visualize pre-aggregated data. This example is
+the US census data from 2018:
+
+```{r us2018}
+us_labels <- labs(
+  x = "Age group", 
+  y = "Thousands of people", 
+  title = "US Cenus Data 2018",
+  caption = "source: https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html"
+)
+
+data(us_2018)
+us_2018
+p <- age_pyramid(us_2018, age_group = age, split_by = gender, count = count)
+p + us_labels
+```
+
+You can also use another factor to split the data:
+
+```{r us2018_factor}
+data(us_ins_2018) # stratified by gender and health insurance status
+data(us_gen_2018) # stratified by gender and generational status
+p_ins <- age_pyramid(us_ins_2018, age_group = age, split_by = gender, stack_by = insured, count = count)
+p_gen <- age_pyramid(us_gen_2018, age_group = age, split_by = gender, stack_by = generation, count = count)
+p_ins + us_labels
+p_gen + us_labels
+```
+

@@ -19,37 +19,64 @@ status](https://ci.appveyor.com/api/projects/status/github/R4EPI/apyramid?branch
 coverage](https://codecov.io/gh/R4EPI/apyramid/branch/master/graph/badge.svg)](https://codecov.io/gh/R4EPI/apyramid?branch=master)
 <!-- badges: end -->
 
+<!--
+NOTE: If you want to change anything here, please edit the files listed below.
+-->
+
 The goal of {apyramid} is to provide a quick method for visualizing
 census data stratified by age and one or two categorical variables
-(e.g. gender and health status).
+(e.g. gender and health status). This is a product of the R4EPIs
+project; learn more at <https://r4epis.netlify.com>.
 
 ## Installation
 
-{apyramid} is not currently on CRAN, but you can install it from the
-R4EPIs GitHub page like so:
+You can install {apyramid} from CRAN:
 
 ``` r
-# install.packages('remotes')
-remotes::install_github("R4EPI/apyramid")
+install.packages("apyramid")
 ```
 
-## Example
+You can also install the development version from GitHub using the
+{remotes} package:
+
+The most recent released code is guaranteed to be stable:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("R4EPI/apyramid@*release") 
+```
+
+Otherwise, you can install the bleeding-edge version like so:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("R4EPI/apyramid") 
+```
 
 The {apyramid} package was primarily designed for quick visualisation of
 un-aggregated linelist data in field epidemiological situations. It has
 one available function:
 
   - `age_pyramid()` returns age pyramid visualizations of linelist,
-    survey, or pre-aggregated census data.
+    survey, or pre-aggregated census data as a `ggplot` object.
 
 <!-- end list -->
 
 ``` r
-library("outbreaks")
 library("apyramid")
-library("ggplot2")
+library("ggplot2")   # load ggplot2 to control plot aesthetics
+library("outbreaks") # load the outbreaks package for linelist data
 old_theme <- theme_set(theme_classic(base_size = 18))
+```
 
+## Example
+
+We can demonstrate plotting of un-aggregated data with the
+`fluH7N9_china_2013` data set in the {outbreaks} package that records
+136 cases of Influenza A H7N9 in China in 2013 (source:
+<https://doi.org/10.5061/dryad.2g43n>)
+
+``` r
 flu <- outbreaks::fluH7N9_china_2013
 
 # data preparation (create age groups from ages)
@@ -59,24 +86,24 @@ autocut <- function(x) {
 flu$age_group <- autocut(as.integer(flu$age))
 levels(flu$gender) <- c("Female", "Male")
 head(flu)
-#>   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome gender
-#> 1       1    2013-02-19                    <NA>      2013-03-04   Death   Male
-#> 2       2    2013-02-27              2013-03-03      2013-03-10   Death   Male
-#> 3       3    2013-03-09              2013-03-19      2013-04-09   Death Female
-#> 4       4    2013-03-19              2013-03-27            <NA>    <NA> Female
-#> 5       5    2013-03-19              2013-03-30      2013-05-15 Recover Female
-#> 6       6    2013-03-21              2013-03-28      2013-04-26   Death Female
-#>   age province age_group
-#> 1  87 Shanghai   (50,60]
-#> 2  27 Shanghai    [0,10]
-#> 3  35    Anhui   (10,20]
-#> 4  45  Jiangsu   (10,20]
-#> 5  48  Jiangsu   (10,20]
-#> 6  32  Jiangsu    [0,10]
+#>   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome
+#> 1       1    2013-02-19                    <NA>      2013-03-04   Death
+#> 2       2    2013-02-27              2013-03-03      2013-03-10   Death
+#> 3       3    2013-03-09              2013-03-19      2013-04-09   Death
+#> 4       4    2013-03-19              2013-03-27            <NA>    <NA>
+#> 5       5    2013-03-19              2013-03-30      2013-05-15 Recover
+#> 6       6    2013-03-21              2013-03-28      2013-04-26   Death
+#>   gender age province age_group
+#> 1   Male  87 Shanghai   (50,60]
+#> 2   Male  27 Shanghai    [0,10]
+#> 3 Female  35    Anhui   (10,20]
+#> 4 Female  45  Jiangsu   (10,20]
+#> 5 Female  48  Jiangsu   (10,20]
+#> 6 Female  32  Jiangsu    [0,10]
 
 flup <- age_pyramid(flu, age_group, split_by = gender)
-#> Warning: 2 missing rows were removed (0 values from `age_group` and 2 values
-#> from `gender`).
+#> Warning: 2 missing rows were removed (0 values from `age_group` and 2
+#> values from `gender`).
 flup
 ```
 
@@ -98,8 +125,8 @@ flup +
     title   = "136 cases of influenza A H7N9 in China",
     caption = "Source: https://doi.org/10.5061/dryad.2g43n"
   )
-#> Scale for 'fill' is already present. Adding another scale for 'fill', which
-#> will replace the existing scale.
+#> Scale for 'fill' is already present. Adding another scale for 'fill',
+#> which will replace the existing scale.
 ```
 
 <img src="man/figures/README-flu2-1.png" width="100%" />
@@ -121,12 +148,13 @@ age_pyramid(flu, age_group, split_by = gender, na.rm = FALSE)
 example is the US census data from 2018:
 
 ``` r
-
 us_labels <- labs(
   x = "Age group", 
   y = "Thousands of people", 
   title = "US Cenus Data 2018",
-  caption = "source: https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html")
+  caption = "source: https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html"
+)
+
 data(us_2018)
 us_2018
 #> # A tibble: 36 x 4
@@ -179,8 +207,8 @@ library(srvyr, warn.conflicts = FALSE)
 data(api, package = "survey")
 
 dstrata <- apistrat %>%
-   mutate(apicat = cut(api00, pretty(api00), include.lowest = TRUE, right = TRUE)) %>%
-   as_survey_design(strata = stype, weights = pw)
+  mutate(apicat = cut(api00, pretty(api00), include.lowest = TRUE, right = TRUE)) %>%
+  as_survey_design(strata = stype, weights = pw)
  
 age_pyramid(dstrata, apicat, split_by = stype)
 ```
