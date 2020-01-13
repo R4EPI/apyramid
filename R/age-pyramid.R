@@ -9,7 +9,7 @@
 #'   the bivariate column. Defaults to "sex". See NOTE
 #'
 #' @param stack_by the name of the column in the data frame to use for shading
-#'   the bars. Defaults to `NULL`, which will shade the bars by the `split_by`
+#'   the bars. Defaults to `NULL` which will shade the bars by the `split_by`
 #'   variable.
 #' 
 #' @param count **for pre-computed data** the name of the column in the data
@@ -42,11 +42,11 @@
 #'   [ggplot2::scale_fill_manual()] defaults to the first "qual" palette from
 #'   [ggplot2::scale_fill_brewer()].
 #'
-#' @note If the `split_by` variable is bivariate (e.g. an indicator for
-#' pregnancy), then the result will show up as a pyramid, otherwise, it will be
-#' presented as a facetted barplot with with empty bars in the background
-#' indicating the range of the un-facetted data set. Values of `split_by` will
-#' show up as labels at top of each facet.
+#' @note If the `split_by` variable is bivariate (e.g. an indicator for a
+#' specific symptom), then the result will show up as a pyramid, otherwise, it
+#' will be presented as a facetted barplot with with empty bars in the
+#' background indicating the range of the un-facetted data set. Values of
+#' `split_by` will show up as labels at top of each facet.
 #'
 #' @import ggplot2
 #' @importFrom scales percent
@@ -67,17 +67,19 @@
 #' # 2018 US census data by age, gender, and insurance status
 #' data(us_ins_2018)
 #' age_pyramid(us_ins_2018, 
-#'             age_group = age,
-#'             split_by = gender,
-#'             stack_by = insured,
-#'             count = count)
+#'   age_group = age,
+#'   split_by = gender,
+#'   stack_by = insured,
+#'   count = count
+#' )
 #' us_ins_2018$prop <- us_ins_2018$percent/100
 #' age_pyramid(us_ins_2018,
-#'             age_group = age,
-#'             split_by = gender,
-#'             stack_by = insured,
-#'             count = prop,
-#'             proportion = TRUE)
+#'   age_group = age,
+#'   split_by = gender,
+#'   stack_by = insured,
+#'   count = prop,
+#'   proportion = TRUE
+#' )
 #'
 #' # from linelist data --------------------------------------------------------
 #' set.seed(2018 - 01 - 15)

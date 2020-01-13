@@ -1,0 +1,11 @@
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  fig.width = 12,
+  fig.height = 7,
+  out.width = "100%"
+)
+```
+

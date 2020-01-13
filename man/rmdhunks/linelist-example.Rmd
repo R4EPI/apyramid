@@ -1,0 +1,47 @@
+## Example
+
+We can demonstrate plotting of un-aggregated data with the `fluH7N9_china_2013`
+data set in the {outbreaks} package that records 136 cases of Influenza A H7N9
+in China in 2013 (source: <https://doi.org/10.5061/dryad.2g43n>)
+
+```{r flu}
+flu <- outbreaks::fluH7N9_china_2013
+
+# data preparation (create age groups from ages)
+autocut <- function(x) {
+  cut(x, breaks = pretty(x), right = TRUE, include.lowest = TRUE)
+}
+flu$age_group <- autocut(as.integer(flu$age))
+levels(flu$gender) <- c("Female", "Male")
+head(flu)
+
+flup <- age_pyramid(flu, age_group, split_by = gender)
+flup
+```
+
+Since the result is a ggplot2 object, it can be customized like one:
+
+```{r flu2}
+flup + 
+  scale_fill_grey(guide = guide_legend(order = 1)) + 
+  theme(text = element_text(size = 18, family = "serif")) + 
+  theme(panel.background = element_rect(fill = "#ccffff")) + 
+  theme(plot.background = element_rect(fill = "#ffffcc")) + 
+  theme(legend.background = element_blank()) +
+  labs(
+    x       = "Age group (years)",
+    y       = "Number of cases",
+    fill    = "Gender",
+    title   = "136 cases of influenza A H7N9 in China",
+    caption = "Source: https://doi.org/10.5061/dryad.2g43n"
+  )
+```
+
+One of the advantages of {apyramid} is that it will adjust to account for 
+non-binary categorical variables. For example, in the flu data set, there are
+two cases with no gender reported. If we set `na.rm = FALSE`, we can the age
+distribution of these two cases:
+
+```{r flu3}
+age_pyramid(flu, age_group, split_by = gender, na.rm = FALSE)
+```

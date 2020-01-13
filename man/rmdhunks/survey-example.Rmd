@@ -1,0 +1,20 @@
+Survey Data
+-----------
+
+Beyond that, survey data can be incorporated with the help of srvyr. Note that
+while it will show the weighted counts, it will not show the confidence
+intervals as that highly depends on the appropriate choice of CI estimator. This
+is meant as more of quick visualization tool for EDA. 
+
+```{r srvyr}
+library(srvyr, warn.conflicts = FALSE)
+data(api, package = "survey")
+
+dstrata <- apistrat %>%
+  mutate(apicat = cut(api00, pretty(api00), include.lowest = TRUE, right = TRUE)) %>%
+  as_survey_design(strata = stype, weights = pw)
+ 
+age_pyramid(dstrata, apicat, split_by = stype)
+
+theme_set(old_theme)
+```

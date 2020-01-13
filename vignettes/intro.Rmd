@@ -1,0 +1,31 @@
+---
+title: "Introduction to {apyramid}"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to {apyramid}}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup-hunk, child="../man/rmdhunks/setup.Rmd"}
+```
+
+<!--
+NOTE: If you want to change anything here, please edit the files listed below.
+-->
+
+```{r introduction-hunk, child="../man/rmdhunks/introduction.Rmd"}
+```
+
+```{r linelist-example-hunk, child="../man/rmdhunks/linelist-example.Rmd"}
+```
+
+```{r pre-aggregated-example-hunk, child = "../man/rmdhunks/pre-aggregated-example.Rmd"}
+```
+
+```{r survey-example-hunk, child="../man/rmdhunks/survey-example.Rmd"}
+```
+
+```{r related-packages-hunk, child="../man/rmdhunks/related-packages.Rmd"}
+```
+

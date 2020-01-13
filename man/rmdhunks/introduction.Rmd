@@ -1,0 +1,45 @@
+The goal of {apyramid} is to provide a quick method for visualizing census data
+stratified by age and one or two categorical variables (e.g. gender and health
+status). This is a product of the R4EPIs project; learn more at <https://r4epis.netlify.com>.
+
+## Installation
+
+You can install {apyramid} from CRAN:
+
+``` r
+install.packages("apyramid")
+```
+
+You can also install the development version from GitHub using the {remotes}
+package:
+
+The most recent released code is guaranteed to be stable:
+
+```r
+# install.packages("remotes")
+remotes::install_github("R4EPI/apyramid@*release") 
+```
+
+Otherwise, you can install the bleeding-edge version like so:
+
+```r
+# install.packages("remotes")
+remotes::install_github("R4EPI/apyramid") 
+```
+
+The {apyramid} package was primarily designed for quick visualisation of
+un-aggregated linelist data in field epidemiological situations. It has one
+available function:
+
+ - `age_pyramid()` returns age pyramid visualizations of linelist, survey, or
+   pre-aggregated census data as a `ggplot` object.
+
+
+```{r load_packages}
+library("apyramid")
+library("ggplot2")   # load ggplot2 to control plot aesthetics
+library("outbreaks") # load the outbreaks package for linelist data
+old_theme <- theme_set(theme_classic(base_size = 18))
+```
+
+

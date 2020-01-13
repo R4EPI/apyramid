@@ -29,7 +29,7 @@ group categories. Defaults to "age_group"}
 the bivariate column. Defaults to "sex". See NOTE}
 
 \item{stack_by}{the name of the column in the data frame to use for shading
-the bars. Defaults to \code{NULL}, which will shade the bars by the \code{split_by}
+the bars. Defaults to \code{NULL} which will shade the bars by the \code{split_by}
 variable.}
 
 \item{count}{\strong{for pre-computed data} the name of the column in the data
@@ -66,11 +66,11 @@ a population pyramid (non-binary variables cannot form a pyramid). If
 Plot a population pyramid (age-sex) from a dataframe.
 }
 \note{
-If the \code{split_by} variable is bivariate (e.g. an indicator for
-pregnancy), then the result will show up as a pyramid, otherwise, it will be
-presented as a facetted barplot with with empty bars in the background
-indicating the range of the un-facetted data set. Values of \code{split_by} will
-show up as labels at top of each facet.
+If the \code{split_by} variable is bivariate (e.g. an indicator for a
+specific symptom), then the result will show up as a pyramid, otherwise, it
+will be presented as a facetted barplot with with empty bars in the
+background indicating the range of the un-facetted data set. Values of
+\code{split_by} will show up as labels at top of each facet.
 }
 \examples{
 
@@ -87,17 +87,19 @@ age_pyramid(us_2008, age_group = age, split_by = gender, count = count)
 # 2018 US census data by age, gender, and insurance status
 data(us_ins_2018)
 age_pyramid(us_ins_2018, 
-            age_group = age,
-            split_by = gender,
-            stack_by = insured,
-            count = count)
+  age_group = age,
+  split_by = gender,
+  stack_by = insured,
+  count = count
+)
 us_ins_2018$prop <- us_ins_2018$percent/100
 age_pyramid(us_ins_2018,
-            age_group = age,
-            split_by = gender,
-            stack_by = insured,
-            count = prop,
-            proportion = TRUE)
+  age_group = age,
+  split_by = gender,
+  stack_by = insured,
+  count = prop,
+  proportion = TRUE
+)
 
 # from linelist data --------------------------------------------------------
 set.seed(2018 - 01 - 15)
