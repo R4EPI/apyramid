@@ -84,6 +84,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/intro.html">Introduction to {apyramid}</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -152,7 +164,7 @@ the bivariate column. Defaults to "sex". See NOTE</p></td>
     <tr>
       <th>stack_by</th>
       <td><p>the name of the column in the data frame to use for shading
-the bars. Defaults to <code>NULL</code>, which will shade the bars by the <code>split_by</code>
+the bars. Defaults to <code>NULL</code> which will shade the bars by the <code>split_by</code>
 variable.</p></td>
     </tr>
     <tr>
@@ -205,11 +217,11 @@ a population pyramid (non-binary variables cannot form a pyramid). If
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>If the <code>split_by</code> variable is bivariate (e.g. an indicator for
-pregnancy), then the result will show up as a pyramid, otherwise, it will be
-presented as a facetted barplot with with empty bars in the background
-indicating the range of the un-facetted data set. Values of <code>split_by</code> will
-show up as labels at top of each facet.</p>
+    <p>If the <code>split_by</code> variable is bivariate (e.g. an indicator for a
+specific symptom), then the result will show up as a pyramid, otherwise, it
+will be presented as a facetted barplot with with empty bars in the
+background indicating the range of the un-facetted data set. Values of
+<code>split_by</code> will show up as labels at top of each facet.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -224,16 +236,18 @@ show up as labels at top of each facet.</p>
 <span class='co'># 2018 US census data by age, gender, and insurance status</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>us_ins_2018</span>)
 <span class='fu'>age_pyramid</span>(<span class='no'>us_ins_2018</span>,
-            <span class='kw'>age_group</span> <span class='kw'>=</span> <span class='no'>age</span>,
-            <span class='kw'>split_by</span> <span class='kw'>=</span> <span class='no'>gender</span>,
-            <span class='kw'>stack_by</span> <span class='kw'>=</span> <span class='no'>insured</span>,
-            <span class='kw'>count</span> <span class='kw'>=</span> <span class='no'>count</span>)</div><div class='img'><img src='age_pyramid-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>us_ins_2018</span>$<span class='no'>prop</span> <span class='kw'>&lt;-</span> <span class='no'>us_ins_2018</span>$<span class='no'>percent</span>/<span class='fl'>100</span>
+  <span class='kw'>age_group</span> <span class='kw'>=</span> <span class='no'>age</span>,
+  <span class='kw'>split_by</span> <span class='kw'>=</span> <span class='no'>gender</span>,
+  <span class='kw'>stack_by</span> <span class='kw'>=</span> <span class='no'>insured</span>,
+  <span class='kw'>count</span> <span class='kw'>=</span> <span class='no'>count</span>
+)</div><div class='img'><img src='age_pyramid-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>us_ins_2018</span>$<span class='no'>prop</span> <span class='kw'>&lt;-</span> <span class='no'>us_ins_2018</span>$<span class='no'>percent</span>/<span class='fl'>100</span>
 <span class='fu'>age_pyramid</span>(<span class='no'>us_ins_2018</span>,
-            <span class='kw'>age_group</span> <span class='kw'>=</span> <span class='no'>age</span>,
-            <span class='kw'>split_by</span> <span class='kw'>=</span> <span class='no'>gender</span>,
-            <span class='kw'>stack_by</span> <span class='kw'>=</span> <span class='no'>insured</span>,
-            <span class='kw'>count</span> <span class='kw'>=</span> <span class='no'>prop</span>,
-            <span class='kw'>proportion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='age_pyramid-4.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='kw'>age_group</span> <span class='kw'>=</span> <span class='no'>age</span>,
+  <span class='kw'>split_by</span> <span class='kw'>=</span> <span class='no'>gender</span>,
+  <span class='kw'>stack_by</span> <span class='kw'>=</span> <span class='no'>insured</span>,
+  <span class='kw'>count</span> <span class='kw'>=</span> <span class='no'>prop</span>,
+  <span class='kw'>proportion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='img'><img src='age_pyramid-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># from linelist data --------------------------------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>2018</span> - <span class='fl'>01</span> - <span class='fl'>15</span>)
 <span class='no'>ages</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cut.html'>cut</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>80</span>, <span class='fl'>150</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
