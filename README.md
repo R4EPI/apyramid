@@ -11,6 +11,8 @@ Age Pyramids in R
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/apyramid)](https://CRAN.R-project.org/package=apyramid)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/apyramid)](https://CRAN.R-project.org/package=apyramid)
 [![Travis build
 status](https://travis-ci.org/R4EPI/apyramid.svg?branch=master)](https://travis-ci.org/R4EPI/apyramid)
 [![AppVeyor build
@@ -36,22 +38,36 @@ You can install {apyramid} from CRAN:
 install.packages("apyramid")
 ```
 
-You can also install the development version from GitHub using the
-{remotes} package:
+<details>
 
-The most recent released code is guaranteed to be stable:
+<!--
+NOTE: everything inside the details tag will be collapsed and effectively
+hidden from the user
+-->
+
+<summary style='text-decoration: underline'>Click here for alternative
+installation options</summary>
+
+If there is a bugfix or feature that is not yet on CRAN, you can install
+it via the {drat} package:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("R4EPI/apyramid@*release") 
+# install.packages("drat")
+drat::addRepo("R4EPI")
+install.packages("apyramid")
 ```
 
-Otherwise, you can install the bleeding-edge version like so:
+You can also install the in-development version from GitHub using the
+{remotes} package (but there’s no guarantee that it will be stable):
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("R4EPI/apyramid") 
 ```
+
+</details>
+
+-----
 
 The {apyramid} package was primarily designed for quick visualisation of
 un-aggregated linelist data in field epidemiological situations. It has
@@ -86,24 +102,24 @@ autocut <- function(x) {
 flu$age_group <- autocut(as.integer(flu$age))
 levels(flu$gender) <- c("Female", "Male")
 head(flu)
-#>   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome
-#> 1       1    2013-02-19                    <NA>      2013-03-04   Death
-#> 2       2    2013-02-27              2013-03-03      2013-03-10   Death
-#> 3       3    2013-03-09              2013-03-19      2013-04-09   Death
-#> 4       4    2013-03-19              2013-03-27            <NA>    <NA>
-#> 5       5    2013-03-19              2013-03-30      2013-05-15 Recover
-#> 6       6    2013-03-21              2013-03-28      2013-04-26   Death
-#>   gender age province age_group
-#> 1   Male  87 Shanghai   (50,60]
-#> 2   Male  27 Shanghai    [0,10]
-#> 3 Female  35    Anhui   (10,20]
-#> 4 Female  45  Jiangsu   (10,20]
-#> 5 Female  48  Jiangsu   (10,20]
-#> 6 Female  32  Jiangsu    [0,10]
+#>   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome gender
+#> 1       1    2013-02-19                    <NA>      2013-03-04   Death   Male
+#> 2       2    2013-02-27              2013-03-03      2013-03-10   Death   Male
+#> 3       3    2013-03-09              2013-03-19      2013-04-09   Death Female
+#> 4       4    2013-03-19              2013-03-27            <NA>    <NA> Female
+#> 5       5    2013-03-19              2013-03-30      2013-05-15 Recover Female
+#> 6       6    2013-03-21              2013-03-28      2013-04-26   Death Female
+#>   age province age_group
+#> 1  87 Shanghai   (50,60]
+#> 2  27 Shanghai    [0,10]
+#> 3  35    Anhui   (10,20]
+#> 4  45  Jiangsu   (10,20]
+#> 5  48  Jiangsu   (10,20]
+#> 6  32  Jiangsu    [0,10]
 
 flup <- age_pyramid(flu, age_group, split_by = gender)
-#> Warning: 2 missing rows were removed (0 values from `age_group` and 2
-#> values from `gender`).
+#> Warning: 2 missing rows were removed (0 values from `age_group` and 2 values
+#> from `gender`).
 flup
 ```
 
@@ -125,8 +141,8 @@ flup +
     title   = "136 cases of influenza A H7N9 in China",
     caption = "Source: https://doi.org/10.5061/dryad.2g43n"
   )
-#> Scale for 'fill' is already present. Adding another scale for 'fill',
-#> which will replace the existing scale.
+#> Scale for 'fill' is already present. Adding another scale for 'fill', which
+#> will replace the existing scale.
 ```
 
 <img src="man/figures/README-flu2-1.png" width="100%" />
