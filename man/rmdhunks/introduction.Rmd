@@ -10,22 +10,33 @@ You can install {apyramid} from CRAN:
 install.packages("apyramid")
 ```
 
-You can also install the development version from GitHub using the {remotes}
-package:
+<details>
+<!--
+NOTE: everything inside the details tag will be collapsed and effectively
+hidden from the user
+-->
+<summary style='text-decoration: underline'>Click here for alternative installation options</summary>
 
-The most recent released code is guaranteed to be stable:
+If there is a bugfix or feature that is not yet on CRAN, you can install it via
+the {drat} package:
 
-```r
-# install.packages("remotes")
-remotes::install_github("R4EPI/apyramid@*release") 
+```{r eval = FALSE}
+# install.packages("drat")
+drat::addRepo("R4EPI")
+install.packages("apyramid")
 ```
 
-Otherwise, you can install the bleeding-edge version like so:
+You can also install the in-development version from GitHub using the {remotes}
+package (but there's no guarantee that it will be stable):
 
-```r
+```{r eval = FALSE}
 # install.packages("remotes")
 remotes::install_github("R4EPI/apyramid") 
 ```
+
+</details>
+
+-------
 
 The {apyramid} package was primarily designed for quick visualisation of
 un-aggregated linelist data in field epidemiological situations. It has one
