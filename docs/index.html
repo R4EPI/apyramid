@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">apyramid</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -153,25 +153,26 @@ remotes::install_github("R4EPI/apyramid")
 <a class="sourceLine" id="cb3-7" data-line-number="7">flu<span class="op">$</span>age_group &lt;-<span class="st"> </span><span class="kw">autocut</span>(<span class="kw"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(flu<span class="op">$</span>age))</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(flu<span class="op">$</span>gender) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>)</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(flu)</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome gender</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; 1       1    2013-02-19                    &lt;NA&gt;      2013-03-04   Death   Male</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 2       2    2013-02-27              2013-03-03      2013-03-10   Death   Male</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 3       3    2013-03-09              2013-03-19      2013-04-09   Death Female</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 4       4    2013-03-19              2013-03-27            &lt;NA&gt;    &lt;NA&gt; Female</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 5       5    2013-03-19              2013-03-30      2013-05-15 Recover Female</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 6       6    2013-03-21              2013-03-28      2013-04-26   Death Female</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;   age province age_group</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; 1  87 Shanghai   (50,60]</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; 2  27 Shanghai    [0,10]</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; 3  35    Anhui   (10,20]</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; 4  45  Jiangsu   (10,20]</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; 5  48  Jiangsu   (10,20]</span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; 6  32  Jiangsu    [0,10]</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;   case_id date_of_onset date_of_hospitalisation date_of_outcome outcome</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; 1       1    2013-02-19                    &lt;NA&gt;      2013-03-04   Death</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 2       2    2013-02-27              2013-03-03      2013-03-10   Death</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 3       3    2013-03-09              2013-03-19      2013-04-09   Death</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 4       4    2013-03-19              2013-03-27            &lt;NA&gt;    &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 5       5    2013-03-19              2013-03-30      2013-05-15 Recover</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 6       6    2013-03-21              2013-03-28      2013-04-26   Death</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;   gender age province age_group</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; 1   Male  87 Shanghai   (50,60]</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; 2   Male  27 Shanghai    [0,10]</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; 3 Female  35    Anhui   (10,20]</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; 4 Female  45  Jiangsu   (10,20]</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; 5 Female  48  Jiangsu   (10,20]</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; 6 Female  32  Jiangsu    [0,10]</span></a>
 <a class="sourceLine" id="cb3-24" data-line-number="24"></a>
 <a class="sourceLine" id="cb3-25" data-line-number="25">flup &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(flu, age_group, <span class="dt">split_by =</span> gender)</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; Warning: 2 missing rows were removed (0 values from `age_group` and 2 values</span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; from `gender`).</span></a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">flup</a></code></pre></div>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; Warning: 2 missing rows were removed (0 values from `age_group` and 2</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt; values from `gender`).</span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt; Warning: `expand_scale()` is deprecated; use `expansion()` instead.</span></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">flup</a></code></pre></div>
 <p><img src="reference/figures/README-flu-1.png" width="100%"></p>
 <p>Since the result is a ggplot2 object, it can be customized like one:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">flup <span class="op">+</span><span class="st"> </span></a>
@@ -187,11 +188,12 @@ remotes::install_github("R4EPI/apyramid")
 <a class="sourceLine" id="cb4-11" data-line-number="11">    <span class="dt">title   =</span> <span class="st">"136 cases of influenza A H7N9 in China"</span>,</a>
 <a class="sourceLine" id="cb4-12" data-line-number="12">    <span class="dt">caption =</span> <span class="st">"Source: https://doi.org/10.5061/dryad.2g43n"</span></a>
 <a class="sourceLine" id="cb4-13" data-line-number="13">  )</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; Scale for 'fill' is already present. Adding another scale for 'fill', which</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; will replace the existing scale.</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; Scale for 'fill' is already present. Adding another scale for 'fill',</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; which will replace the existing scale.</span></a></code></pre></div>
 <p><img src="reference/figures/README-flu2-1.png" width="100%"></p>
 <p>One of the advantages of {apyramid} is that it will adjust to account for non-binary categorical variables. For example, in the flu data set, there are two cases with no gender reported. If we set <code>na.rm = FALSE</code>, we can the age distribution of these two cases:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(flu, age_group, <span class="dt">split_by =</span> gender, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(flu, age_group, <span class="dt">split_by =</span> gender, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; Warning: `expand_scale()` is deprecated; use `expansion()` instead.</span></a></code></pre></div>
 <p><img src="reference/figures/README-flu3-1.png" width="100%"></p>
 </div>
 <div id="pre-aggregated-data" class="section level2">
@@ -222,14 +224,17 @@ remotes::install_github("R4EPI/apyramid")
 <a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt; 10 20-24 female 10625     6.4</span></a>
 <a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">#&gt; # … with 26 more rows</span></a>
 <a class="sourceLine" id="cb6-24" data-line-number="24">p &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(us_<span class="dv">2018</span>, <span class="dt">age_group =</span> age, <span class="dt">split_by =</span> gender, <span class="dt">count =</span> count)</a>
-<a class="sourceLine" id="cb6-25" data-line-number="25">p <span class="op">+</span><span class="st"> </span>us_labels</a></code></pre></div>
+<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="co">#&gt; Warning: `expand_scale()` is deprecated; use `expansion()` instead.</span></a>
+<a class="sourceLine" id="cb6-26" data-line-number="26">p <span class="op">+</span><span class="st"> </span>us_labels</a></code></pre></div>
 <p><img src="reference/figures/README-us2018-1.png" width="100%"></p>
 <p>You can also use another factor to split the data:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(us_ins_<span class="dv">2018</span>) <span class="co"># stratified by gender and health insurance status</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(us_gen_<span class="dv">2018</span>) <span class="co"># stratified by gender and generational status</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">p_ins &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(us_ins_<span class="dv">2018</span>, <span class="dt">age_group =</span> age, <span class="dt">split_by =</span> gender, <span class="dt">stack_by =</span> insured, <span class="dt">count =</span> count)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">p_gen &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(us_gen_<span class="dv">2018</span>, <span class="dt">age_group =</span> age, <span class="dt">split_by =</span> gender, <span class="dt">stack_by =</span> generation, <span class="dt">count =</span> count)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">p_ins <span class="op">+</span><span class="st"> </span>us_labels</a></code></pre></div>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt; Warning: `expand_scale()` is deprecated; use `expansion()` instead.</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">p_gen &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(us_gen_<span class="dv">2018</span>, <span class="dt">age_group =</span> age, <span class="dt">split_by =</span> gender, <span class="dt">stack_by =</span> generation, <span class="dt">count =</span> count)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; Warning: `expand_scale()` is deprecated; use `expansion()` instead.</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">p_ins <span class="op">+</span><span class="st"> </span>us_labels</a></code></pre></div>
 <p><img src="reference/figures/README-us2018_factor-1.png" width="100%"></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">p_gen <span class="op">+</span><span class="st"> </span>us_labels</a></code></pre></div>
 <p><img src="reference/figures/README-us2018_factor-2.png" width="100%"></p>
@@ -245,7 +250,8 @@ remotes::install_github("R4EPI/apyramid")
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/srvyr/man/dplyr_single.html">mutate</a></span>(<span class="dt">apicat =</span> <span class="kw"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(api00, <span class="kw"><a href="https://rdrr.io/r/base/pretty.html">pretty</a></span>(api00), <span class="dt">include.lowest =</span> <span class="ot">TRUE</span>, <span class="dt">right =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/srvyr/man/as_survey_design.html">as_survey_design</a></span>(<span class="dt">strata =</span> stype, <span class="dt">weights =</span> pw)</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"> </a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(dstrata, apicat, <span class="dt">split_by =</span> stype)</a></code></pre></div>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="kw"><a href="reference/age_pyramid.html">age_pyramid</a></span>(dstrata, apicat, <span class="dt">split_by =</span> stype)</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; Warning: `expand_scale()` is deprecated; use `expansion()` instead.</span></a></code></pre></div>
 <p><img src="reference/figures/README-srvyr-1.png" width="100%"></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span>(old_theme)</a></code></pre></div>
