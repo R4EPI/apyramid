@@ -1,3 +1,5 @@
+This fixes failing tests on CRAN
+
 ## Test environments
 
 * local ubuntu 18.04 install, R 3.6.2
@@ -6,7 +8,5 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* This is a new release and fixes typographical 
-  errors from the initial attempt.  
