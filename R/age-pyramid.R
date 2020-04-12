@@ -264,12 +264,13 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   } else {
     pyramid <- pyramid + scale_fill_manual(values = pal, guide = guide_legend(order = 1))
   }
+  EXPANSION <- if (utils::packageVersion("ggplot2") < "3.3.0") ggplot2::expand_scale else ggplot2::expansion
   pyramid <- pyramid +
     scale_y_continuous(
       limits = if (split_measured_binary) range(the_breaks) else c(0, max_n),
       breaks = the_breaks,
       labels = lab_fun,
-      expand = ggplot2::expand_scale(mult = 0.02, add = 0)
+      expand = EXPANSION(mult = 0.02, add = 0)
     ) +
     scale_x_discrete(drop = FALSE) # note: drop = FALSE important to avoid missing age groups
 
