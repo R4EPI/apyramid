@@ -29,5 +29,5 @@ notifications:
     on_failure: change
 
 after_success:
-- if [[ "${R_CODECOV}" ]]; then Rscript -e 'covr::codecov()'; fi
+  - if [[ "${R_CODECOV}" ]]; then Rscript -e 'covr::codecov()'; fi
 
