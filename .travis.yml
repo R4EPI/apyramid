@@ -6,6 +6,7 @@ r_github_packages:
   - r-lib/rlang
   - r-lib/vctrs
   - tidyverse/dplyr
+  - gergness/srvyr
 
 matrix:
   include:

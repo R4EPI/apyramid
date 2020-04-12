@@ -9,7 +9,8 @@
 \alias{us_gen_2018}
 \alias{us_gen_2008}
 \title{US Census data for population, age, and gender}
-\format{All tables are in long \link[dplyr:tibble]{tibble} format. There are three
+\format{
+All tables are in long \link[dplyr:tibble]{tibble} format. There are three
 columns common to all of the tables:
 \itemize{
 \item \strong{age} [factor] 18 ordered age groups in increments of five years from
@@ -62,7 +63,18 @@ generation.  Natives with at least one foreign-born parent are considered
 second generation.  Natives with two native parents are considered
 third-and-higher generation.
 
-}}
+}
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 36 rows and 4 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 72 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 72 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 108 rows and 5 columns.
+
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 108 rows and 5 columns.
+}
 \source{
 \url{https://census.gov/data/tables/2018/demo/age-and-sex/2018-age-sex-composition.html}
 \url{https://census.gov/data/tables/2008/demo/age-and-sex/2008-age-sex-composition.html}
