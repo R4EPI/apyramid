@@ -1,3 +1,11 @@
+# apyramid 0.1.2
+
+CRAN MAINTENANCE
+----------------
+
+* This version has no user-visible changes and fixes a couple of changed 
+  behaviors that arose because of dplyr version 1.0.0. (#6, #7, @zkamvar).
+
 # apyramid 0.1.1
 
 CRAN MAINTENANCE
