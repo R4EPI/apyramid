@@ -1,6 +1,6 @@
 Package: apyramid
 Title: Visualize Population Pyramids Aggregated by Age
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person(given = "Zhian N.",
            family = "Kamvar",
@@ -40,5 +40,5 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr

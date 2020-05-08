@@ -212,7 +212,7 @@ age_pyramid <- function(data, age_group = "age_group", split_by = "sex",
   }
 
   # find the maximum x axis position
-  maxdata <- dplyr::tally(maxdata, wt = !!quote(n))
+  maxdata <- dplyr::tally(maxdata, wt = !!quote(n), name = "n")
   max_n <- max(abs(maxdata[["n"]]), na.rm = TRUE)
 
   if (proportional) {

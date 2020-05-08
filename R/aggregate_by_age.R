@@ -74,7 +74,11 @@ aggregate_by_age <- function(data, age_group = "age_group", split_by = "sex",
     if (!requireNamespace("srvyr")) {
       stop("Please install the srvyr package to proceed\n\ninstall.packages('srvyr')")
     } else {
-      plot_data <- srvyr::group_by(data, !!ag, !!sb, !!st, .drop = FALSE)
+      if (split_by == stack_by) {
+        plot_data <- srvyr::group_by(data, !!ag, !!sb, .drop = FALSE)
+      } else {
+        plot_data <- srvyr::group_by(data, !!ag, !!sb, !!st, .drop = FALSE)
+      }
       plot_data <- srvyr::summarise(plot_data,
         n = srvyr::survey_total(vartype = "ci", level = 0.95)
       )
