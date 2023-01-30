@@ -54,7 +54,7 @@ treat_nas <- function(data, age_group, split_by, stack_by, na.rm) {
     # Force missing values to be "Missing"
     data <- dplyr::mutate_at(data,
                              .vars = da_vars,
-                             .funs = forcats::fct_explicit_na, "Missing")
+                             .funs = forcats::fct_na_value_to_level, "Missing")
   }
 
   return(data)
