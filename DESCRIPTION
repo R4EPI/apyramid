@@ -24,7 +24,7 @@ Imports:
     ggplot2 (>= 3.0.0),
     tidyselect,
     rlang,
-    forcats,
+    forcats (>= 1.0.0),
     dplyr,
     scales,
     glue
