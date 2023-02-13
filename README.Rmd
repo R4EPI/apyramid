@@ -11,7 +11,7 @@ output: github_document
 # apyramid
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/apyramid)](https://CRAN.R-project.org/package=apyramid)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/apyramid)](https://CRAN.R-project.org/package=apyramid)
 [![Travis build status](https://travis-ci.org/R4EPI/apyramid.svg?branch=master)](https://travis-ci.org/R4EPI/apyramid)
