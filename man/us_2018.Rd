@@ -10,7 +10,7 @@
 \alias{us_gen_2008}
 \title{US Census data for population, age, and gender}
 \format{
-All tables are in long \link[dplyr:tibble]{tibble} format. There are three
+All tables are in long \link[dplyr:reexports]{tibble} format. There are three
 columns common to all of the tables:
 \itemize{
 \item \strong{age} [factor] 18 ordered age groups in increments of five years from

@@ -1,6 +1,6 @@
 The goal of {apyramid} is to provide a quick method for visualizing census data
 stratified by age and one or two categorical variables (e.g. gender and health
-status). This is a product of the R4EPIs project; learn more at <https://r4epis.netlify.com>.
+status). This is a product of the R4EPIs project; learn more at <https://r4epis.netlify.app/>.
 
 ## Installation
 
