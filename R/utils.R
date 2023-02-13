@@ -30,7 +30,7 @@ to_character <- function(x) {
 treat_nas <- function(data, age_group, split_by, stack_by, na.rm) {
 
   da_vars <- c(age_group, split_by, stack_by)
-  data    <- dplyr::select(data, any_of(da_vars))
+  data    <- dplyr::select(data, tidyselect::any_of(da_vars))
 
   if (na.rm) {
     missing   <- dplyr::mutate_at(data, .vars = da_vars, .funs = is.na)

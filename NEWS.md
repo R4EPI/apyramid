@@ -1,3 +1,15 @@
+# apyramid 0.1.3
+
+DEPENDENCY UPDATE
+-----------------
+
+* Apyramid now requires forcats version 1.0.0 or above.
+
+BUG FIX
+-------
+
+* A bug with an outdated version of tidyselect syntax was fixed (#9, @hadley)
+
 # apyramid 0.1.2
 
 CRAN MAINTENANCE
